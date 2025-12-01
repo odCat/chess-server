@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import ro.mg.chessserver.model.Player;
@@ -21,8 +22,10 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    public String register() {
-        return "user";
+    public String register(@RequestBody Player player) {
+        userService.addPlayer(player);
+
+        return player.toString();
     }
 
     @GetMapping("/user")
