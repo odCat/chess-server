@@ -1,8 +1,10 @@
 package ro.mg.chessserver.model;
 
+import lombok.Setter;
 import lombok.ToString;
 
 
+@Setter
 @ToString
 public class Player {
 
