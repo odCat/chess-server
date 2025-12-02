@@ -17,4 +17,19 @@ public class UserService {
     public void addPlayer(Player player) {
         players.add(player);
     }
+
+    public Player deletePlayer(int id) {
+        if (players.isEmpty())
+            return null;
+
+        for (int index = 0; index < players.size(); ++index) {
+            Player player = players.get(index);
+            if (player.getId() == id) {
+                players.remove(index);
+                return player;
+            }
+        }
+
+        return null;
+    }
 }
