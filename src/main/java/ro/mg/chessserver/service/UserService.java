@@ -18,14 +18,10 @@ public class UserService {
         players.add(player);
     }
 
-    public Player deletePlayer(int id) {
+    public void deletePlayer(int id) {
         int index = search(id);
-        if (index != -1) {
-            Player player = players.get(index);
+        if (index != -1)
             players.remove(index);
-            return player;
-        } else
-            return null;
     }
 
     private int search(int id) {
