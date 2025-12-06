@@ -1,7 +1,6 @@
 package ro.mg.chessserver.controller;
 
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import ro.mg.chessserver.model.Player;
+import ro.mg.chessserver.request.LoginRequest;
 import ro.mg.chessserver.service.UserService;
 
 
@@ -31,13 +31,11 @@ public class UserController {
     }
 
     @PostMapping
-    @ResponseBody
     public ResponseEntity<Player> register(@Validated @RequestBody Player player) {
         if (userService.addPlayer(player))
             return ResponseEntity.status(HttpStatus.CREATED).body(player);
         else
-            return
-                   ResponseEntity.status(HttpStatus.OK).body(null);
+            return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
     @GetMapping("/all")
@@ -47,8 +45,13 @@ public class UserController {
     }
 
     @GetMapping
-    public String login() {
-        return "user";
+    public ResponseEntity<Player> login(@RequestBody LoginRequest login) {
+        Player player = userService.login(login);
+
+        if (player == null)
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        else
+            return ResponseEntity.status(HttpStatus.OK).body(player);
     }
 
     @PutMapping
