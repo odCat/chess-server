@@ -53,7 +53,7 @@ public class UserController {
     }
 
     @DeleteMapping
-    public Player delete(@RequestBody DeleteRequest request) {
-        return userService.deletePlayer(request.getId());
+    public Player delete(@RequestParam int id) {
+        return userService.deletePlayer(id);
     }
 }
