@@ -16,4 +16,15 @@ public class Player {
     private String password;
     private String firstName;
     private String lastName;
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null)
+            return false;
+
+        if (!(obj instanceof Player player))
+            return false;
+
+        return player.id == this.id || player.getEmail().equalsIgnoreCase(this.getEmail());
+    }
 }
