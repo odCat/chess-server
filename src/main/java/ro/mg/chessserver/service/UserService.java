@@ -19,17 +19,39 @@ public class UserService {
     }
 
     public Player deletePlayer(int id) {
-        if (players.isEmpty())
+        int index = search(id);
+        if (index != -1) {
+            Player player = players.get(index);
+            players.remove(index);
+            return player;
+        } else
             return null;
+    }
+
+    private int search(int id) {
+        if (players.isEmpty())
+            return -1;
 
         for (int index = 0; index < players.size(); ++index) {
             Player player = players.get(index);
             if (player.getId() == id) {
-                players.remove(index);
-                return player;
+                return index;
             }
         }
 
-        return null;
+        return -1;
+    }
+
+    private int search(Player player) {
+        if (players.isEmpty())
+            return -1;
+
+        for (int index = 0; index < players.size(); ++index) {
+            if (player.equals(players.get(index))) {
+                return index;
+            }
+        }
+
+        return -1;
     }
 }
