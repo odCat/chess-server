@@ -14,8 +14,12 @@ public class UserService {
     @Getter
     private final List<Player> players = new ArrayList<>();
 
-    public void addPlayer(Player player) {
-        players.add(player);
+    public boolean addPlayer(Player player) {
+        if (search(player) == -1) {
+            players.add(player);
+            return true;
+        } else
+            return false;
     }
 
     public void deletePlayer(int id) {

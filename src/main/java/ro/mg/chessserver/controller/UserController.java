@@ -31,10 +31,13 @@ public class UserController {
     }
 
     @PostMapping
-    public String register(@RequestBody Player player) {
-        userService.addPlayer(player);
-
-        return player.toString();
+    @ResponseBody
+    public ResponseEntity<Player> register(@Validated @RequestBody Player player) {
+        if (userService.addPlayer(player))
+            return ResponseEntity.status(HttpStatus.CREATED).body(player);
+        else
+            return
+                   ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
     @GetMapping("/all")
