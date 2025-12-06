@@ -1,5 +1,6 @@
 package ro.mg.chessserver;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -7,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import ro.mg.chessserver.model.Player;
 
 
+@Tag("Unit")
 public class TestPlayer {
 
     @Test
