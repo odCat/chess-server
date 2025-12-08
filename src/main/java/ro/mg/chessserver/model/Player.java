@@ -29,7 +29,7 @@ public class Player {
 
     @NotNull(message = "Password must not be null")
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&+=]).{8,24}$",
-            message = "Password must have 8-24 characters and include digit + lowercase + uppercase + symbol")
+            message = "Password must have 8-24 characters and include at least a digit, a lowercase, an uppercase and a symbol")
     private String password;
 
     private String firstName;
