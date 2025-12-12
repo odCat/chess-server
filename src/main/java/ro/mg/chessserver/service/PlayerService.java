@@ -10,7 +10,7 @@ import ro.mg.chessserver.request.LoginRequest;
 
 
 @Service
-public class UserService {
+public class PlayerService {
 
     @Getter
     private final List<Player> players = new ArrayList<>();

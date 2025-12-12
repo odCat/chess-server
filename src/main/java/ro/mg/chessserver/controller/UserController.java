@@ -23,22 +23,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ro.mg.chessserver.model.Player;
 import ro.mg.chessserver.request.LoginRequest;
-import ro.mg.chessserver.service.UserService;
+import ro.mg.chessserver.service.PlayerService;
 
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
-    private final UserService userService;
+    private final PlayerService playerService;
 
-    public UserController(@Autowired UserService userService) {
-        this.userService = userService;
+    public UserController(@Autowired PlayerService playerService) {
+        this.playerService = playerService;
     }
 
     @PostMapping
     public ResponseEntity<Player> register(@Valid @RequestBody Player player) {
-        if (userService.addPlayer(player))
+        if (playerService.addPlayer(player))
             return ResponseEntity.status(HttpStatus.CREATED).body(player);
         else
             return ResponseEntity.status(HttpStatus.OK).body(null);
@@ -47,12 +47,12 @@ public class UserController {
     @GetMapping("/all")
     @ResponseBody
     public List<Player> getAllPlayers() {
-        return userService.getPlayers();
+        return playerService.getPlayers();
     }
 
     @GetMapping
     public ResponseEntity<Player> login(@RequestBody LoginRequest login) {
-        Player player = userService.login(login);
+        Player player = playerService.login(login);
 
         if (player == null)
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
@@ -62,7 +62,7 @@ public class UserController {
 
     @PatchMapping
     public ResponseEntity<Player> update(@RequestParam int id, @RequestBody Player player) {
-        Player updated = userService.update(id, player);
+        Player updated = playerService.update(id, player);
         if (updated == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         else
@@ -71,7 +71,7 @@ public class UserController {
 
     @DeleteMapping
     public ResponseEntity<Void> delete(@RequestParam int id) {
-        userService.deletePlayer(id);
+        playerService.deletePlayer(id);
         return ResponseEntity.ok().build();
     }
 
