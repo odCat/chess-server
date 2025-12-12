@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -14,6 +15,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @AllArgsConstructor
+@NoArgsConstructor
 public class Player {
 
     private int id;
@@ -44,5 +46,20 @@ public class Player {
             return false;
 
         return player.id == this.id || player.getEmail().equalsIgnoreCase(this.getEmail());
+    }
+
+    public boolean fullEquals(Object obj) {
+        if (obj == null)
+            return false;
+
+        if (!(obj instanceof Player player))
+            return false;
+
+        return player.id == this.id &&
+               player.getEmail().equalsIgnoreCase(this.getEmail()) &&
+               player.getUsername().equalsIgnoreCase(this.getUsername()) &&
+               player.getPassword().equals(this.getPassword()) &&
+               player.getFirstName().equalsIgnoreCase(this.getFirstName()) &&
+               player.getLastName().equalsIgnoreCase(this.getLastName());
     }
 }

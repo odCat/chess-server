@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import ro.mg.chessserver.model.Player;
 import ro.mg.chessserver.request.LoginRequest;
@@ -107,5 +108,79 @@ public class TestUserService {
 
         Player actual = userService.login(login);
         assertNull(actual);
+    }
+
+    @Test
+    void testCannotUpdatePlayerId() {
+        Player player1 = new Player(1, "john@doe.net", "johndoe", "password", "John", "Doe");
+        userService.addPlayer(player1);
+        Player player2 = new Player();
+        player2.setId(1);
+
+        userService.update(1, player2);
+
+        int actual = userService.getPlayers().getFirst().getId();
+        int expected = 1;
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void testCanUpdateAllFieldsAtOnce() {
+        Player player1 = new Player(1, "john@doe.net", "johndoe", "password", "John", "Doe");
+        userService.addPlayer(player1);
+        Player player2 = new Player(1, "jane@doe.net", "janedoe", "janepassword", "Jane", "Doe");
+
+        userService.update(1, player2);
+
+        String actual = userService.getPlayers().getFirst().getEmail();
+        String expected = player2.getEmail();
+        assertEquals(expected, actual);
+
+        actual = userService.getPlayers().getFirst().getUsername();
+        expected = player2.getUsername();
+        assertEquals(expected, actual);
+
+        actual = userService.getPlayers().getFirst().getPassword();
+        expected = player2.getPassword();
+        assertEquals(expected, actual);
+
+        actual = userService.getPlayers().getFirst().getFirstName();
+        expected = player2.getFirstName();
+        assertEquals(expected, actual);
+
+        actual = userService.getPlayers().getFirst().getLastName();
+        expected = player2.getLastName();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void testUpdateNonExistingPlayer() {
+        Player expectedPlayer = new Player(1, "john@doe.net", "johndoe", "password", "John", "Doe");
+        userService.addPlayer(expectedPlayer);
+        Player otherPlayer = new Player(3, "jane@doe.net", "janedoe", "janepassword", "Jane", "Doe");
+        userService.update(3, otherPlayer);
+
+        int actual = userService.getPlayers().size();
+        int expected = 1;
+        assertEquals(expected, actual);
+
+        Player actualPlayer = userService.getPlayers().getFirst();
+        assertTrue(actualPlayer.fullEquals(expectedPlayer));
+    }
+
+    @Test
+    void testUpdateWithEmptyPlayer() {
+        Player expectedPlayer = new Player(1, "john@doe.net", "johndoe", "password", "John", "Doe");
+        userService.addPlayer(expectedPlayer);
+        Player player2 = new Player();
+        player2.setId(1);
+        userService.update(1, player2);
+
+        int actual = userService.getPlayers().size();
+        int expected = 1;
+        assertEquals(expected, actual);
+
+        Player actualPlayer = userService.getPlayers().getFirst();
+        assertTrue(actualPlayer.fullEquals(expectedPlayer));
     }
 }

@@ -32,6 +32,52 @@ public class UserService {
         return null;
     }
 
+    public Player update(int id, Player updatePlayer) {
+        int index = search(id);
+        if (index == -1)
+            return null;
+
+        Player oldPlayer = players.get(index);
+        Player newPlayer = createNewPlayer(id, oldPlayer, updatePlayer);
+        players.remove(index);
+        players.add(newPlayer);
+
+        return newPlayer;
+    }
+
+    private Player createNewPlayer(int id, Player oldPlayer, Player updatePlayer) {
+        Player newPlayer = new Player();
+
+        newPlayer.setId(id);
+
+        if (updatePlayer.getEmail() != null)
+            newPlayer.setEmail(updatePlayer.getEmail());
+        else
+            newPlayer.setEmail(oldPlayer.getEmail());
+
+        if (updatePlayer.getUsername() != null)
+            newPlayer.setUsername(updatePlayer.getUsername());
+        else
+            newPlayer.setUsername(oldPlayer.getUsername());
+
+        if (updatePlayer.getPassword() != null)
+            newPlayer.setPassword(updatePlayer.getPassword());
+        else
+            newPlayer.setPassword(oldPlayer.getPassword());
+
+        if (updatePlayer.getFirstName() != null)
+            newPlayer.setFirstName(updatePlayer.getFirstName());
+        else
+            newPlayer.setFirstName(oldPlayer.getFirstName());
+
+        if (updatePlayer.getLastName() != null)
+            newPlayer.setLastName(updatePlayer.getLastName());
+        else
+            newPlayer.setLastName(oldPlayer.getLastName());
+
+        return newPlayer;
+    }
+
     public void deletePlayer(int id) {
         int index = search(id);
         if (index != -1)
