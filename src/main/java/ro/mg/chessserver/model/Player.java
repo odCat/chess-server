@@ -20,13 +20,11 @@ public class Player {
 
     private int id;
 
-    @NotNull(message = "Email must not be null")
-    @NotBlank(message = "Email must not be empty")
+    @NotBlank(message = "Email must not be blank")
     @Email
     private String email;
 
-    @NotNull(message = "Username must not be null")
-    @NotBlank(message = "Username must not be empty")
+    @NotBlank(message = "Username must not be blank")
     private String username;
 
     @NotNull(message = "Password must not be null")
