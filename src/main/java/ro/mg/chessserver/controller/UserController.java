@@ -36,14 +36,6 @@ public class UserController {
         this.playerService = playerService;
     }
 
-    @PostMapping
-    public ResponseEntity<Player> register(@Valid @RequestBody Player player) {
-        if (playerService.addPlayer(player))
-            return ResponseEntity.status(HttpStatus.CREATED).body(player);
-        else
-            return ResponseEntity.status(HttpStatus.OK).body(null);
-    }
-
     @GetMapping("/all")
     @ResponseBody
     public List<Player> getAllPlayers() {
@@ -58,6 +50,14 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         else
             return ResponseEntity.status(HttpStatus.OK).body(player);
+    }
+
+    @PostMapping
+    public ResponseEntity<Player> register(@Valid @RequestBody Player player) {
+        if (playerService.addPlayer(player))
+            return ResponseEntity.status(HttpStatus.CREATED).body(player);
+        else
+            return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
     @PatchMapping
