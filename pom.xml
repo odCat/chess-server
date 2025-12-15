@@ -14,7 +14,7 @@
     <artifactId>chessserver</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>chessserver</name>
-    <description>chessserver</description>
+    <description>Chess server</description>
 
     <url/>
     <licenses>
@@ -51,6 +51,7 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
