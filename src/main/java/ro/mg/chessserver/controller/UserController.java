@@ -51,7 +51,7 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<Player> login(@RequestBody LoginRequest login) {
+    public ResponseEntity<Player> login(@Valid @RequestBody LoginRequest login) {
         Player player = playerService.login(login);
 
         if (player == null)
