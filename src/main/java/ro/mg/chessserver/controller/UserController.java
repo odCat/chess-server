@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ro.mg.chessserver.model.Player;
 import ro.mg.chessserver.request.LoginRequest;
+import ro.mg.chessserver.request.UpdateRequest;
 import ro.mg.chessserver.service.PlayerService;
 
 
@@ -61,8 +62,8 @@ public class UserController {
     }
 
     @PatchMapping
-    public ResponseEntity<Player> update(@RequestParam int id, @RequestBody Player player) {
-        Player updated = playerService.update(id, player);
+    public ResponseEntity<Player> update(@RequestParam int id, @RequestBody UpdateRequest update) {
+        Player updated = playerService.update(id, update);
         if (updated == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         else

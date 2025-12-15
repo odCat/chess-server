@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import ro.mg.chessserver.model.Player;
 import ro.mg.chessserver.request.LoginRequest;
+import ro.mg.chessserver.request.UpdateRequest;
 
 
 @Service
@@ -32,46 +33,46 @@ public class PlayerService {
         return null;
     }
 
-    public Player update(int id, Player updatePlayer) {
+    public Player update(int id, UpdateRequest update) {
         int index = search(id);
         if (index == -1)
             return null;
 
         Player oldPlayer = players.get(index);
-        Player newPlayer = createNewPlayer(id, oldPlayer, updatePlayer);
+        Player newPlayer = createNewPlayer(id, oldPlayer, update);
         players.remove(index);
         players.add(newPlayer);
 
         return newPlayer;
     }
 
-    private Player createNewPlayer(int id, Player oldPlayer, Player updatePlayer) {
+    private Player createNewPlayer(int id, Player oldPlayer, UpdateRequest update) {
         Player newPlayer = new Player();
 
         newPlayer.setId(id);
 
-        if (updatePlayer.getEmail() != null)
-            newPlayer.setEmail(updatePlayer.getEmail());
+        if (update.getEmail() != null)
+            newPlayer.setEmail(update.getEmail());
         else
             newPlayer.setEmail(oldPlayer.getEmail());
 
-        if (updatePlayer.getUsername() != null)
-            newPlayer.setUsername(updatePlayer.getUsername());
+        if (update.getUsername() != null)
+            newPlayer.setUsername(update.getUsername());
         else
             newPlayer.setUsername(oldPlayer.getUsername());
 
-        if (updatePlayer.getPassword() != null)
-            newPlayer.setPassword(updatePlayer.getPassword());
+        if (update.getPassword() != null)
+            newPlayer.setPassword(update.getPassword());
         else
             newPlayer.setPassword(oldPlayer.getPassword());
 
-        if (updatePlayer.getFirstName() != null)
-            newPlayer.setFirstName(updatePlayer.getFirstName());
+        if (update.getFirstName() != null)
+            newPlayer.setFirstName(update.getFirstName());
         else
             newPlayer.setFirstName(oldPlayer.getFirstName());
 
-        if (updatePlayer.getLastName() != null)
-            newPlayer.setLastName(updatePlayer.getLastName());
+        if (update.getLastName() != null)
+            newPlayer.setLastName(update.getLastName());
         else
             newPlayer.setLastName(oldPlayer.getLastName());
 

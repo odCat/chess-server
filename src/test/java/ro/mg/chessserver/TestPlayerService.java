@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import ro.mg.chessserver.model.Player;
 import ro.mg.chessserver.request.LoginRequest;
+import ro.mg.chessserver.request.UpdateRequest;
 import ro.mg.chessserver.service.PlayerService;
 
 
@@ -111,24 +112,10 @@ public class TestPlayerService {
     }
 
     @Test
-    void testCannotUpdatePlayerId() {
-        Player player1 = new Player(1, "john@doe.net", "johndoe", "password", "John", "Doe");
-        playerService.addPlayer(player1);
-        Player player2 = new Player();
-        player2.setId(1);
-
-        playerService.update(1, player2);
-
-        int actual = playerService.getPlayers().getFirst().getId();
-        int expected = 1;
-        assertEquals(expected, actual);
-    }
-
-    @Test
     void testCanUpdateAllFieldsAtOnce() {
         Player player1 = new Player(1, "john@doe.net", "johndoe", "password", "John", "Doe");
         playerService.addPlayer(player1);
-        Player player2 = new Player(1, "jane@doe.net", "janedoe", "janepassword", "Jane", "Doe");
+        UpdateRequest player2 = new UpdateRequest("jane@doe.net", "janedoe", "janepassword", "Jane", "Doe");
 
         playerService.update(1, player2);
 
@@ -157,7 +144,7 @@ public class TestPlayerService {
     void testUpdateNonExistingPlayer() {
         Player expectedPlayer = new Player(1, "john@doe.net", "johndoe", "password", "John", "Doe");
         playerService.addPlayer(expectedPlayer);
-        Player otherPlayer = new Player(3, "jane@doe.net", "janedoe", "janepassword", "Jane", "Doe");
+        UpdateRequest otherPlayer = new UpdateRequest("jane@doe.net", "janedoe", "janepassword", "Jane", "Doe");
         playerService.update(3, otherPlayer);
 
         int actual = playerService.getPlayers().size();
@@ -172,8 +159,7 @@ public class TestPlayerService {
     void testUpdateWithEmptyPlayer() {
         Player expectedPlayer = new Player(1, "john@doe.net", "johndoe", "password", "John", "Doe");
         playerService.addPlayer(expectedPlayer);
-        Player player2 = new Player();
-        player2.setId(1);
+        UpdateRequest player2 = new UpdateRequest();
         playerService.update(1, player2);
 
         int actual = playerService.getPlayers().size();
