@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import ro.mg.chessserver.map.PlayerMapper;
 import ro.mg.chessserver.model.Player;
 import ro.mg.chessserver.request.LoginRequest;
 import ro.mg.chessserver.request.UpdateRequest;
@@ -113,31 +114,17 @@ public class TestPlayerService {
 
     @Test
     void testCanUpdateAllFieldsAtOnce() {
+
         Player player1 = new Player(1, "john@doe.net", "johndoe", "password", "John", "Doe");
         playerService.addPlayer(player1);
-        UpdateRequest player2 = new UpdateRequest("jane@doe.net", "janedoe", "janepassword", "Jane", "Doe");
 
-        playerService.update(1, player2);
+        UpdateRequest update = new UpdateRequest("jane@doe.net", "janedoe", "janepassword", "Jane", "Doe");
+        playerService.update(1, update);
 
-        String actual = playerService.getPlayers().getFirst().getEmail();
-        String expected = player2.getEmail();
-        assertEquals(expected, actual);
+        Player actual = playerService.getPlayers().getFirst();
+        Player expected = PlayerMapper.playerFromUpdateRequest(update);
 
-        actual = playerService.getPlayers().getFirst().getUsername();
-        expected = player2.getUsername();
-        assertEquals(expected, actual);
-
-        actual = playerService.getPlayers().getFirst().getPassword();
-        expected = player2.getPassword();
-        assertEquals(expected, actual);
-
-        actual = playerService.getPlayers().getFirst().getFirstName();
-        expected = player2.getFirstName();
-        assertEquals(expected, actual);
-
-        actual = playerService.getPlayers().getFirst().getLastName();
-        expected = player2.getLastName();
-        assertEquals(expected, actual);
+        assertTrue(comparePlayersWithoutId(expected, actual));
     }
 
     @Test
@@ -168,5 +155,26 @@ public class TestPlayerService {
 
         Player actualPlayer = playerService.getPlayers().getFirst();
         assertTrue(actualPlayer.fullEquals(expectedPlayer));
+    }
+
+    @SuppressWarnings("RedundantIfStatement")
+    private boolean comparePlayersWithoutId(Player player1, Player player2) {
+
+        if (!player1.getEmail().equals(player2.getEmail()))
+            return false;
+
+        if (!player1.getUsername().equals(player2.getUsername()))
+            return false;
+
+        if (!player1.getPassword().equals(player2.getPassword()))
+            return false;
+
+        if (!player1.getFirstName().equals(player2.getFirstName()))
+            return false;
+
+        if (!player1.getLastName().equals(player2.getLastName()))
+            return false;
+
+        return true;
     }
 }
