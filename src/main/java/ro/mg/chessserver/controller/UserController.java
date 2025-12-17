@@ -37,13 +37,13 @@ public class UserController {
         this.playerService = playerService;
     }
 
-    @GetMapping("/all")
+    @GetMapping
     @ResponseBody
     public List<Player> getAllPlayers() {
         return playerService.getPlayers();
     }
 
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<Player> register(@Valid @RequestBody Player player) {
         if (playerService.addPlayer(player))
             return ResponseEntity.status(HttpStatus.CREATED).body(player);
@@ -51,7 +51,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
-    @GetMapping
+    @PostMapping("/login")
     public ResponseEntity<Player> login(@Valid @RequestBody LoginRequest login) {
         Player player = playerService.login(login);
 
