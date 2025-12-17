@@ -43,6 +43,14 @@ public class UserController {
         return playerService.getPlayers();
     }
 
+    @PostMapping
+    public ResponseEntity<Player> register(@Valid @RequestBody Player player) {
+        if (playerService.addPlayer(player))
+            return ResponseEntity.status(HttpStatus.CREATED).body(player);
+        else
+            return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
     @GetMapping
     public ResponseEntity<Player> login(@Valid @RequestBody LoginRequest login) {
         Player player = playerService.login(login);
@@ -51,14 +59,6 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         else
             return ResponseEntity.status(HttpStatus.OK).body(player);
-    }
-
-    @PostMapping
-    public ResponseEntity<Player> register(@Valid @RequestBody Player player) {
-        if (playerService.addPlayer(player))
-            return ResponseEntity.status(HttpStatus.CREATED).body(player);
-        else
-            return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
     @PatchMapping
