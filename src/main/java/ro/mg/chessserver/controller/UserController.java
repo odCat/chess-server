@@ -28,7 +28,7 @@ import ro.mg.chessserver.service.PlayerService;
 
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
 
     private final PlayerService playerService;
