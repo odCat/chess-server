@@ -14,7 +14,7 @@ create table players (
      username text not null,
      full_name text,
      image blob,
-     room integer,
+     room integer default 1 not null,
      foreign key (room) references rooms(id)
 );
 
