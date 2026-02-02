@@ -1,5 +1,8 @@
 package ro.mg.chessserver.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -11,6 +14,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 
+@Entity
+@Table(name = "players")
 @Getter
 @Setter
 @ToString
@@ -18,6 +23,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class Player {
 
+    @Id
     private int id;
 
     @NotBlank(message = "Email must not be blank")

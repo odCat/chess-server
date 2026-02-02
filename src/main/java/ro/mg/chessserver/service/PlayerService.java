@@ -3,9 +3,11 @@ package ro.mg.chessserver.service;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ro.mg.chessserver.model.Player;
+import ro.mg.chessserver.repository.PlayerRepository;
 import ro.mg.chessserver.request.LoginRequest;
 import ro.mg.chessserver.request.UpdateRequest;
 
@@ -13,8 +15,16 @@ import ro.mg.chessserver.request.UpdateRequest;
 @Service
 public class PlayerService {
 
-    @Getter
     private final List<Player> players = new ArrayList<>();
+    private final PlayerRepository playerRepository;
+
+    public PlayerService(@Autowired PlayerRepository playerRepository) {
+        this.playerRepository = playerRepository;
+    }
+
+    public List<Player> getPlayers() {
+        return playerRepository.findAll();
+    }
 
     public boolean addPlayer(Player player) {
         if (search(player) == -1) {
