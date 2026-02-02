@@ -32,8 +32,7 @@ public class Player {
             message = "Password must have 8-24 characters and include at least a digit, a lowercase, an uppercase and a symbol")
     private String password;
 
-    private String firstName;
-    private String lastName;
+    private String fullName;
 
     @Override
     public boolean equals(Object obj) {
@@ -57,7 +56,7 @@ public class Player {
                player.getEmail().equalsIgnoreCase(this.getEmail()) &&
                player.getUsername().equalsIgnoreCase(this.getUsername()) &&
                player.getPassword().equals(this.getPassword()) &&
-               player.getFirstName().equalsIgnoreCase(this.getFirstName()) &&
-               player.getLastName().equalsIgnoreCase(this.getLastName());
+               player.getFullName().equalsIgnoreCase(this.getFullName())
+        ;
     }
 }

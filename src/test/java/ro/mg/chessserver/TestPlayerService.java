@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import ro.mg.chessserver.map.PlayerMapper;
 import ro.mg.chessserver.model.Player;
 import ro.mg.chessserver.request.LoginRequest;
@@ -16,12 +17,16 @@ import ro.mg.chessserver.service.PlayerService;
 @Tag("Unit")
 public class TestPlayerService {
 
-    PlayerService playerService = new PlayerService();
+    PlayerService playerService;
+
+    public TestPlayerService(@Autowired PlayerService playerService) {
+        this.playerService = playerService;
+    }
 
     @Test
     void testAddPlayers() {
-        Player player1 = new Player(1, "john@doe.net", "johndoe", "password", "John", "Doe");
-        Player player2 = new Player(2, "jane@doe.net", "janedoe", "password", "Jane", "Doe");
+        Player player1 = new Player(1, "john@doe.net", "johndoe", "password", "John Doe");
+        Player player2 = new Player(2, "jane@doe.net", "janedoe", "password", "Jane Doe");
 
         boolean actual = playerService.addPlayer(player1);
         boolean expected = true;
@@ -41,7 +46,7 @@ public class TestPlayerService {
 
     @Test
     void testAddExistingPlayer() {
-        Player player1 = new Player(1, "john@doe.net", "johndoe", "password", "John", "Doe");
+        Player player1 = new Player(1, "john@doe.net", "johndoe", "password", "John Doe");
 
         playerService.addPlayer(player1);
         boolean actualAdded = playerService.addPlayer(player1);
@@ -56,8 +61,8 @@ public class TestPlayerService {
 
     @Test
     void testRemovePlayer() {
-        Player player1 = new Player(1, "john@doe.net", "johndoe", "password", "John", "Doe");
-        Player player2 = new Player(2, "jane@doe.net", "janedoe", "password", "Jane", "Doe");
+        Player player1 = new Player(1, "john@doe.net", "johndoe", "password", "John Doe");
+        Player player2 = new Player(2, "jane@doe.net", "janedoe", "password", "Jane Doe");
 
         playerService.addPlayer(player1);
         playerService.addPlayer(player2);
@@ -70,8 +75,8 @@ public class TestPlayerService {
 
     @Test
     void testRemoveNonExistingPlayer() {
-        Player player1 = new Player(1, "john@doe.net", "johndoe", "password", "John", "Doe");
-        Player player2 = new Player(2, "jane@doe.net", "janedoe", "password", "Jane", "Doe");
+        Player player1 = new Player(1, "john@doe.net", "johndoe", "password", "John Doe");
+        Player player2 = new Player(2, "jane@doe.net", "janedoe", "password", "Jane Doe");
 
         playerService.addPlayer(player1);
         playerService.deletePlayer(player2.getId());
@@ -83,7 +88,7 @@ public class TestPlayerService {
 
     @Test
     void testLoginSuccessful() {
-        Player expected = new Player(1, "john@doe.net", "johndoe", "password", "John", "Doe");
+        Player expected = new Player(1, "john@doe.net", "johndoe", "password", "John Doe");
         playerService.addPlayer(expected);
         LoginRequest login = new LoginRequest("johndoe", "password");
 
@@ -93,8 +98,8 @@ public class TestPlayerService {
 
     @Test
     void testLoginNonExistingUser() {
-        Player player1 = new Player(1, "john@doe.net", "johndoe", "password", "John", "Doe");
-        Player player2 = new Player(2, "jane@doe.net", "janedoe", "janepassword", "Jane", "Doe");
+        Player player1 = new Player(1, "john@doe.net", "johndoe", "password", "John Doe");
+        Player player2 = new Player(2, "jane@doe.net", "janedoe", "janepassword", "Jane Doe");
         playerService.addPlayer(player1);
         LoginRequest login = new LoginRequest(player2.getUsername(), player2.getPassword());
 
@@ -104,7 +109,7 @@ public class TestPlayerService {
 
     @Test
     void testLoginWithWrongPassword() {
-        Player player1 = new Player(1, "john@doe.net", "johndoe", "password", "John", "Doe");
+        Player player1 = new Player(1, "john@doe.net", "johndoe", "password", "John Doe");
         playerService.addPlayer(player1);
         LoginRequest login = new LoginRequest(player1.getUsername(), "wrong_password");
 
@@ -115,10 +120,10 @@ public class TestPlayerService {
     @Test
     void testCanUpdateAllFieldsAtOnce() {
 
-        Player player1 = new Player(1, "john@doe.net", "johndoe", "password", "John", "Doe");
+        Player player1 = new Player(1, "john@doe.net", "johndoe", "password", "John Doe");
         playerService.addPlayer(player1);
 
-        UpdateRequest update = new UpdateRequest("jane@doe.net", "janedoe", "janepassword", "Jane", "Doe");
+        UpdateRequest update = new UpdateRequest("jane@doe.net", "janedoe", "janepassword", "Jane Doe");
         playerService.update(1, update);
 
         Player actual = playerService.getPlayers().getFirst();
@@ -129,9 +134,9 @@ public class TestPlayerService {
 
     @Test
     void testUpdateNonExistingPlayer() {
-        Player expectedPlayer = new Player(1, "john@doe.net", "johndoe", "password", "John", "Doe");
+        Player expectedPlayer = new Player(1, "john@doe.net", "johndoe", "password", "John Doe");
         playerService.addPlayer(expectedPlayer);
-        UpdateRequest otherPlayer = new UpdateRequest("jane@doe.net", "janedoe", "janepassword", "Jane", "Doe");
+        UpdateRequest otherPlayer = new UpdateRequest("jane@doe.net", "janedoe", "janepassword", "Jane Doe");
         playerService.update(3, otherPlayer);
 
         int actual = playerService.getPlayers().size();
@@ -144,7 +149,7 @@ public class TestPlayerService {
 
     @Test
     void testUpdateWithEmptyPlayer() {
-        Player expectedPlayer = new Player(1, "john@doe.net", "johndoe", "password", "John", "Doe");
+        Player expectedPlayer = new Player(1, "john@doe.net", "johndoe", "password", "John Doe");
         playerService.addPlayer(expectedPlayer);
         UpdateRequest player2 = new UpdateRequest();
         playerService.update(1, player2);
@@ -169,10 +174,7 @@ public class TestPlayerService {
         if (!player1.getPassword().equals(player2.getPassword()))
             return false;
 
-        if (!player1.getFirstName().equals(player2.getFirstName()))
-            return false;
-
-        if (!player1.getLastName().equals(player2.getLastName()))
+        if (!player1.getFullName().equals(player2.getFullName()))
             return false;
 
         return true;

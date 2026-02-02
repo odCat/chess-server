@@ -66,15 +66,10 @@ public class PlayerService {
         else
             newPlayer.setPassword(oldPlayer.getPassword());
 
-        if (update.getFirstName() != null)
-            newPlayer.setFirstName(update.getFirstName());
+        if (update.getFullName() != null)
+            newPlayer.setFullName(update.getFullName());
         else
-            newPlayer.setFirstName(oldPlayer.getFirstName());
-
-        if (update.getLastName() != null)
-            newPlayer.setLastName(update.getLastName());
-        else
-            newPlayer.setLastName(oldPlayer.getLastName());
+            newPlayer.setFullName(oldPlayer.getFullName());
 
         return newPlayer;
     }

@@ -17,11 +17,8 @@ public class PlayerMapper {
         if (update.getPassword() != null)
             player.setPassword(update.getPassword());
 
-        if (update.getFirstName() != null)
-            player.setFirstName(update.getFirstName());
-
-        if (update.getLastName() != null)
-            player.setLastName(update.getLastName());
+        if (update.getFullName() != null)
+            player.setFullName(update.getFullName());
 
         return player;
     }
