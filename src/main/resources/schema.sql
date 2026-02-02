@@ -12,6 +12,7 @@ create table players (
      id integer primary key,
      email text not null unique,
      username text not null,
+     password text not null,
      full_name text,
      image blob,
      room integer default 1 not null,
