@@ -2,6 +2,8 @@ package ro.mg.chessserver.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,8 @@ import ro.mg.chessserver.request.UpdateRequest;
 
 @Service
 public class PlayerService {
+
+    private static final Logger log = LoggerFactory.getLogger(PlayerService.class);
 
     private final List<Player> players = new ArrayList<>();
     private final PlayerRepository playerRepository;
@@ -31,6 +35,7 @@ public class PlayerService {
             playerRepository.save(player);
             return true;
         } catch (JpaSystemException e) {
+            log.error(e.getMessage());
             return false;
         }
     }
