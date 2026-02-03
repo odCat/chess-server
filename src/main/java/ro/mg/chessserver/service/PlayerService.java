@@ -1,6 +1,5 @@
 package ro.mg.chessserver.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +18,6 @@ public class PlayerService {
 
     private static final Logger log = LoggerFactory.getLogger(PlayerService.class);
 
-    private final List<Player> players = new ArrayList<>();
     private final PlayerRepository playerRepository;
 
     public PlayerService(@Autowired PlayerRepository playerRepository) {
@@ -88,46 +86,5 @@ public class PlayerService {
 
     public void deletePlayer(int id) {
         playerRepository.deleteById(id);
-    }
-
-    private int search(int id) {
-        if (players.isEmpty())
-            return -1;
-
-        for (int index = 0; index < players.size(); ++index) {
-            Player player = players.get(index);
-            if (player.getId() == id) {
-                return index;
-            }
-        }
-
-        return -1;
-    }
-
-    private int search(String userNameOrEmail) {
-        if (players.isEmpty())
-            return -1;
-
-        for (int index = 0; index < players.size(); ++index) {
-            if (players.get(index).getUsername().equals(userNameOrEmail) ||
-                    players.get(index).getEmail().equalsIgnoreCase(userNameOrEmail)) {
-                return index;
-            }
-        }
-
-        return -1;
-    }
-
-    private int search(Player player) {
-        if (players.isEmpty())
-            return -1;
-
-        for (int index = 0; index < players.size(); ++index) {
-            if (player.equals(players.get(index))) {
-                return index;
-            }
-        }
-
-        return -1;
     }
 }
