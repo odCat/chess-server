@@ -41,10 +41,9 @@ public class PlayerService {
     }
 
     public Player login(LoginRequest login) {
-        int index = search(login.getUsernameOrEmail());
-        if (index > -1)
-            if (players.get(index).getPassword().equals(login.getPassword()))
-                return players.get(index);
+        Player player = playerRepository.findByUsernameOrEmail(login.getUsernameOrEmail(), login.getUsernameOrEmail());
+        if (player.getPassword().equals(login.getPassword()))
+                return player;
 
         return null;
     }

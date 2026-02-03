@@ -11,4 +11,5 @@ import ro.mg.chessserver.model.Room;
 public interface PlayerRepository extends JpaRepository<Player, Integer> {
 
     List<Player> findAll();
+    Player findByUsernameOrEmail(String username, String email);
 }
