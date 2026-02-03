@@ -2,8 +2,8 @@ package ro.mg.chessserver.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Service;
 
 import ro.mg.chessserver.model.Player;
@@ -27,11 +27,12 @@ public class PlayerService {
     }
 
     public boolean addPlayer(Player player) {
-        if (search(player) == -1) {
-            players.add(player);
+        try {
+            playerRepository.save(player);
             return true;
-        } else
+        } catch (JpaSystemException e) {
             return false;
+        }
     }
 
     public Player login(LoginRequest login) {
