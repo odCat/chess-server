@@ -49,16 +49,13 @@ public class PlayerService {
     }
 
     public Player update(int id, UpdateRequest update) {
-        int index = search(id);
-        if (index == -1)
+        Player player = playerRepository.findById(id);
+        if (player == null)
             return null;
+        player = createNewPlayer(id, player, update);
+        playerRepository.save(player);
 
-        Player oldPlayer = players.get(index);
-        Player newPlayer = createNewPlayer(id, oldPlayer, update);
-        players.remove(index);
-        players.add(newPlayer);
-
-        return newPlayer;
+        return player;
     }
 
     private Player createNewPlayer(int id, Player oldPlayer, UpdateRequest update) {
