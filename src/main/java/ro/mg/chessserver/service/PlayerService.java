@@ -87,9 +87,7 @@ public class PlayerService {
     }
 
     public void deletePlayer(int id) {
-        int index = search(id);
-        if (index != -1)
-            players.remove(index);
+        playerRepository.deleteById(id);
     }
 
     private int search(int id) {
