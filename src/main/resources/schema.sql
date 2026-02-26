@@ -23,17 +23,19 @@ create table players (
 drop table if exists games;
 
 create table games (
-    id integer unique,
-    white integer,
-    black integer,
-    room integer not null,
+    id integer primary key,
+    white text,
+    white_id integer default 0,
+    black text,
+    black_id integer default 0,
     status text,
-    moves text,
-    result text,
+    pgn text,
+    fen text,
+    result text default '',
     foreign key (white) references players(id),
     foreign key (black) references players(id),
     check (
-        status in ('PENDING', 'INPROGRESS', 'FINISHED')
+        status in ('OPEN', 'INPROGRESS', 'FINISHED')
         and result in ('', 'WHITE WON', 'BLACK WON', 'DRAW')
     )
 );
