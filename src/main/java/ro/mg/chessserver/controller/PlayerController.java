@@ -29,11 +29,11 @@ import ro.mg.chessserver.service.PlayerService;
 
 @RestController
 @RequestMapping("/users")
-public class UserController {
+public class PlayerController {
 
     private final PlayerService playerService;
 
-    public UserController(@Autowired PlayerService playerService) {
+    public PlayerController(@Autowired PlayerService playerService) {
         this.playerService = playerService;
     }
 
