@@ -19,7 +19,7 @@ public class GameService {
     }
 
     public List<Diagram> getAll() {
-        List<Diagram> diagramList = new ArrayList<Diagram>();
+        List<Diagram> diagramList = new ArrayList<>();
         for (Game game : gameRepository.findAll()) {
             diagramList.add(new Diagram(game));
         }

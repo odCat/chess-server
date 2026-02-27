@@ -1,8 +1,16 @@
 package ro.mg.chessserver.request;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import ro.mg.chessserver.model.Game;
 
 
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
 @SuppressWarnings({"unused", "FieldCanBeLocal"})
 public class Diagram {
 
