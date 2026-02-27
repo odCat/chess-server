@@ -5,9 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import ro.mg.chessserver.dto.Diagram;
+import ro.mg.chessserver.model.Game;
 import ro.mg.chessserver.service.GameService;
 
 
@@ -26,5 +29,11 @@ public class GameController {
     @ResponseBody
     public List<Diagram> getOpenGames() {
         return gameService.getAll();
+    }
+
+    @GetMapping("/{id}")
+    @ResponseBody
+    public Game getGame(@PathVariable long id) {
+        return gameService.getGame(id);
     }
 }

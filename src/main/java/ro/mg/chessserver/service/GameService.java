@@ -26,4 +26,8 @@ public class GameService {
 
         return diagramList;
     }
+
+    public Game getGame(long id) {
+        return gameRepository.findGameById(id);
+    }
 }

@@ -10,4 +10,5 @@ import ro.mg.chessserver.model.Game;
 public interface GameRepository extends JpaRepository<Game, Integer> {
 
     List<Game> findAll();
+    Game findGameById(long id);
 }
