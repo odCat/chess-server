@@ -8,6 +8,6 @@ import ro.mg.chessserver.model.Player;
 @Repository
 public interface PlayerRepository extends JpaRepository<Player, Integer> {
 
-    Player findById(int id);
+    Player findById(long id);
     Player findByUsernameOrEmail(String username, String email);
 }
