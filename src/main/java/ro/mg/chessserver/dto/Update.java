@@ -1,4 +1,4 @@
-package ro.mg.chessserver.request;
+package ro.mg.chessserver.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class UpdateRequest {
+public class Update {
 
     private String email;
     private String username;

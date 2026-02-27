@@ -1,11 +1,11 @@
 package ro.mg.chessserver.map;
 
 import ro.mg.chessserver.model.Player;
-import ro.mg.chessserver.request.UpdateRequest;
+import ro.mg.chessserver.dto.Update;
 
 public class PlayerMapper {
 
-    public static Player playerFromUpdateRequest(UpdateRequest update) {
+    public static Player playerFromUpdateRequest(Update update) {
         Player player = new Player();
 
         if (update.getEmail() != null)

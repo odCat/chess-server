@@ -1,4 +1,4 @@
-package ro.mg.chessserver.request;
+package ro.mg.chessserver.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -11,7 +11,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class LoginRequest {
+public class Login {
 
     @NotBlank(message = "Email or username must not be blank")
     private String usernameOrEmail;

@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import ro.mg.chessserver.model.Player;
-import ro.mg.chessserver.request.LoginRequest;
-import ro.mg.chessserver.request.UpdateRequest;
+import ro.mg.chessserver.dto.Login;
+import ro.mg.chessserver.dto.Update;
 import ro.mg.chessserver.service.PlayerService;
 
 
@@ -52,7 +52,7 @@ public class PlayerController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Player> login(@Valid @RequestBody LoginRequest login) {
+    public ResponseEntity<Player> login(@Valid @RequestBody Login login) {
         Player player = playerService.login(login);
 
         if (player == null)
@@ -62,7 +62,7 @@ public class PlayerController {
     }
 
     @PatchMapping
-    public ResponseEntity<Player> update(@RequestParam long id, @RequestBody UpdateRequest update) {
+    public ResponseEntity<Player> update(@RequestParam long id, @RequestBody Update update) {
         Player updated = playerService.update(id, update);
         if (updated == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);

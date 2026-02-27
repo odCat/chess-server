@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.mg.chessserver.model.Game;
 import ro.mg.chessserver.repository.GameRepository;
-import ro.mg.chessserver.request.Diagram;
+import ro.mg.chessserver.dto.Diagram;
 
 
 @Service

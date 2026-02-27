@@ -9,8 +9,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.springframework.beans.factory.annotation.Autowired;
 import ro.mg.chessserver.map.PlayerMapper;
 import ro.mg.chessserver.model.Player;
-import ro.mg.chessserver.request.LoginRequest;
-import ro.mg.chessserver.request.UpdateRequest;
+import ro.mg.chessserver.dto.Login;
+import ro.mg.chessserver.dto.Update;
 import ro.mg.chessserver.service.PlayerService;
 
 
@@ -90,7 +90,7 @@ public class TestPlayerService {
     void testLoginSuccessful() {
         Player expected = new Player(1, "john@doe.net", "johndoe", "password", "John Doe");
         playerService.addPlayer(expected);
-        LoginRequest login = new LoginRequest("johndoe", "password");
+        Login login = new Login("johndoe", "password");
 
         Player actual = playerService.login(login);
         assertEquals(expected, actual);
@@ -101,7 +101,7 @@ public class TestPlayerService {
         Player player1 = new Player(1, "john@doe.net", "johndoe", "password", "John Doe");
         Player player2 = new Player(2, "jane@doe.net", "janedoe", "janepassword", "Jane Doe");
         playerService.addPlayer(player1);
-        LoginRequest login = new LoginRequest(player2.getUsername(), player2.getPassword());
+        Login login = new Login(player2.getUsername(), player2.getPassword());
 
         Player actual = playerService.login(login);
         assertNull(actual);
@@ -111,7 +111,7 @@ public class TestPlayerService {
     void testLoginWithWrongPassword() {
         Player player1 = new Player(1, "john@doe.net", "johndoe", "password", "John Doe");
         playerService.addPlayer(player1);
-        LoginRequest login = new LoginRequest(player1.getUsername(), "wrong_password");
+        Login login = new Login(player1.getUsername(), "wrong_password");
 
         Player actual = playerService.login(login);
         assertNull(actual);
@@ -123,7 +123,7 @@ public class TestPlayerService {
         Player player1 = new Player(1, "john@doe.net", "johndoe", "password", "John Doe");
         playerService.addPlayer(player1);
 
-        UpdateRequest update = new UpdateRequest("jane@doe.net", "janedoe", "janepassword", "Jane Doe");
+        Update update = new Update("jane@doe.net", "janedoe", "janepassword", "Jane Doe");
         playerService.update(1, update);
 
         Player actual = playerService.getPlayers().getFirst();
@@ -136,7 +136,7 @@ public class TestPlayerService {
     void testUpdateNonExistingPlayer() {
         Player expectedPlayer = new Player(1, "john@doe.net", "johndoe", "password", "John Doe");
         playerService.addPlayer(expectedPlayer);
-        UpdateRequest otherPlayer = new UpdateRequest("jane@doe.net", "janedoe", "janepassword", "Jane Doe");
+        Update otherPlayer = new Update("jane@doe.net", "janedoe", "janepassword", "Jane Doe");
         playerService.update(3, otherPlayer);
 
         int actual = playerService.getPlayers().size();
@@ -151,7 +151,7 @@ public class TestPlayerService {
     void testUpdateWithEmptyPlayer() {
         Player expectedPlayer = new Player(1, "john@doe.net", "johndoe", "password", "John Doe");
         playerService.addPlayer(expectedPlayer);
-        UpdateRequest player2 = new UpdateRequest();
+        Update player2 = new Update();
         playerService.update(1, player2);
 
         int actual = playerService.getPlayers().size();

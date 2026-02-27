@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import ro.mg.chessserver.model.Player;
 import ro.mg.chessserver.repository.PlayerRepository;
-import ro.mg.chessserver.request.LoginRequest;
-import ro.mg.chessserver.request.UpdateRequest;
+import ro.mg.chessserver.dto.Login;
+import ro.mg.chessserver.dto.Update;
 
 
 @Service
@@ -38,7 +38,7 @@ public class PlayerService {
         }
     }
 
-    public Player login(LoginRequest login) {
+    public Player login(Login login) {
         Player player = playerRepository.findByUsernameOrEmail(login.getUsernameOrEmail(), login.getUsernameOrEmail());
         if (player.getPassword().equals(login.getPassword()))
                 return player;
@@ -46,7 +46,7 @@ public class PlayerService {
         return null;
     }
 
-    public Player update(long id, UpdateRequest update) {
+    public Player update(long id, Update update) {
         Player player = playerRepository.findById(id);
         if (player == null)
             return null;
@@ -56,7 +56,7 @@ public class PlayerService {
         return player;
     }
 
-    private Player createNewPlayer(long id, Player oldPlayer, UpdateRequest update) {
+    private Player createNewPlayer(long id, Player oldPlayer, Update update) {
         Player newPlayer = new Player();
 
         newPlayer.setId(id);
