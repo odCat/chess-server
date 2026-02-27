@@ -46,7 +46,7 @@ public class PlayerService {
         return null;
     }
 
-    public Player update(int id, UpdateRequest update) {
+    public Player update(long id, UpdateRequest update) {
         Player player = playerRepository.findById(id);
         if (player == null)
             return null;
@@ -56,7 +56,7 @@ public class PlayerService {
         return player;
     }
 
-    private Player createNewPlayer(int id, Player oldPlayer, UpdateRequest update) {
+    private Player createNewPlayer(long id, Player oldPlayer, UpdateRequest update) {
         Player newPlayer = new Player();
 
         newPlayer.setId(id);
@@ -84,7 +84,7 @@ public class PlayerService {
         return newPlayer;
     }
 
-    public void deletePlayer(int id) {
+    public void deletePlayer(long id) {
         playerRepository.deleteById(id);
     }
 }

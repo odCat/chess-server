@@ -27,7 +27,7 @@ public class Player {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @NotBlank(message = "Email must not be blank")
     @Email

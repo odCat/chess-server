@@ -10,4 +10,5 @@ public interface PlayerRepository extends JpaRepository<Player, Integer> {
 
     Player findById(long id);
     Player findByUsernameOrEmail(String username, String email);
+    void deleteById(long id);
 }

@@ -62,7 +62,7 @@ public class UserController {
     }
 
     @PatchMapping
-    public ResponseEntity<Player> update(@RequestParam int id, @RequestBody UpdateRequest update) {
+    public ResponseEntity<Player> update(@RequestParam long id, @RequestBody UpdateRequest update) {
         Player updated = playerService.update(id, update);
         if (updated == null)
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -71,7 +71,7 @@ public class UserController {
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> delete(@RequestParam int id) {
+    public ResponseEntity<Void> delete(@RequestParam long id) {
         playerService.deletePlayer(id);
         return ResponseEntity.ok().build();
     }
