@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import ro.mg.chessserver.model.Game;
+import ro.mg.chessserver.request.Diagram;
 import ro.mg.chessserver.service.GameService;
 
 
@@ -22,7 +22,7 @@ public class GameController {
 
     @GetMapping
     @ResponseBody
-    public List<Game> getOpenGames() {
+    public List<Diagram> getOpenGames() {
         return gameService.getAll();
     }
 }
