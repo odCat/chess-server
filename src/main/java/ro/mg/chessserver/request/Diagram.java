@@ -14,11 +14,13 @@ import ro.mg.chessserver.model.Game;
 @SuppressWarnings({"unused", "FieldCanBeLocal"})
 public class Diagram {
 
+    private final long id;
     private final String white;
     private final String black;
     private final String fen;
 
     public Diagram(Game game) {
+        this.id = game.getId();
         this.white = game.getWhite();
         this.black = game.getBlack();
         this.fen = game.getFen();
