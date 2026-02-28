@@ -30,7 +30,6 @@ values (
        )
 ;
 
-
 insert into games (white, black, status, pgn, fen)
 values (
            'Bogoliubov',
@@ -58,5 +57,24 @@ values (
            'INPROGRESS',
            '[Event "?"] [Site "?"] [Date "????.??.??"] [Round "?"] [White "?"] [Black "?"] [Result "*"] 1. e4 e6 2. d4 d5 3. Nc3 Bb4 4. e5 c5 5. Bd2 Ne7 6. Nb5 Bxd2+ 7. Qxd2 O-O 8. c3 b6 9. f4 Ba6 10. Nf3 Qd7 11. a4 Nbc6 12. b4 cxb4 13. cxb4 Bb7 14. Nd6 f5 15. a5 Nc8 16. Nxb7 Qxb7 17. a6 Qf7 18. Bb5 N8e7 19. O-O h6 20. Rfc1 Rfc8 21. Rc2 Qe8 22. Rac1 Rab8 23. Qe3 Rc7 24. Rc3 Qd7 25. R1c2 Kf8 26. Qc1 Rbc8 *',
            '2r2k2/p1rqn1p1/Ppn1p2p/1B1pPp2/1P1P1P2/2R2N2/2R3PP/2Q3K1 w - - 14 27'
+       )
+;
+
+insert into games (white, black, status, pgn, fen)
+values (
+           '',
+           'Gigel',
+           'OPEN',
+           '',
+           'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
+       )
+;
+insert into games (white, black, status, pgn, fen)
+values (
+           'Costel',
+           '',
+           'OPEN',
+           '',
+           'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
        )
 ;
