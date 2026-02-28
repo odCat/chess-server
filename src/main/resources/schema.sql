@@ -24,13 +24,13 @@ drop table if exists games;
 
 create table games (
     id integer primary key,
-    white text,
+    white text default '',
     white_id integer default 0,
-    black text,
+    black text default '',
     black_id integer default 0,
-    status text,
-    pgn text,
-    fen text,
+    status text default 'OPEN',
+    pgn text default '',
+    fen text default 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
     result text default '',
     foreign key (white) references players(id),
     foreign key (black) references players(id),
