@@ -9,6 +9,6 @@ import ro.mg.chessserver.model.Game;
 @Repository
 public interface GameRepository extends JpaRepository<Game, Long> {
 
-    List<Game> findAll();
     Game findGameById(long id);
+    List<Game> findByStatus(String status);
 }

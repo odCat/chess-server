@@ -28,7 +28,7 @@ public class GameController {
     @GetMapping
     @ResponseBody
     public List<Diagram> getOpenGames() {
-        return gameService.getAll();
+        return gameService.getOpenGames();
     }
 
     @GetMapping("/{id}")
