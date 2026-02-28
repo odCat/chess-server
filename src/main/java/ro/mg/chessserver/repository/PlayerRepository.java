@@ -6,7 +6,7 @@ import ro.mg.chessserver.model.Player;
 
 
 @Repository
-public interface PlayerRepository extends JpaRepository<Player, Integer> {
+public interface PlayerRepository extends JpaRepository<Player, Long> {
 
     Player findById(long id);
     Player findByUsernameOrEmail(String username, String email);
