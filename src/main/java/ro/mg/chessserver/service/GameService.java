@@ -18,7 +18,7 @@ public class GameService {
         this.gameRepository = gameRepository;
     }
 
-    public List<Diagram> getOpenGames() {
+    public List<Diagram> getInProgressGames() {
         List<Diagram> diagramList = new ArrayList<>();
         for (Game game : gameRepository.findByStatus("INPROGRESS")) {
             diagramList.add(new Diagram(game));
@@ -27,6 +27,14 @@ public class GameService {
         return diagramList;
     }
 
+    public List<Diagram> getOpenGames() {
+        List<Diagram> diagramList = new ArrayList<>();
+        for (Game game : gameRepository.findByStatus("OPEN")) {
+            diagramList.add(new Diagram(game));
+        }
+
+        return diagramList;
+    }
     public Game getGame(long id) {
         return gameRepository.findGameById(id);
     }

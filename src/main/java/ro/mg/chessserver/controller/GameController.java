@@ -25,7 +25,13 @@ public class GameController {
         this.gameService = gameService;
     }
 
-    @GetMapping
+    @GetMapping("/inprogress")
+    @ResponseBody
+    public List<Diagram> getInProgressGames() {
+        return gameService.getInProgressGames();
+    }
+
+    @GetMapping("/open")
     @ResponseBody
     public List<Diagram> getOpenGames() {
         return gameService.getOpenGames();
