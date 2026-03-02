@@ -20,7 +20,16 @@ public class GameService {
     }
 
     public Game create(Open openRequest) {
+        Game existing = gameRepository.findByStatus("OPEN").stream()
+                .filter((game) -> game.getWhite().equals(openRequest.getName()) || game.getBlack().equals(openRequest.getName()))
+                .findFirst()
+                .orElse(null);
+
+        if (existing != null)
+            return existing;
+
         Game game = new Game(openRequest);
+
         return gameRepository.save(game);
     }
 

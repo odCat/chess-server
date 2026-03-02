@@ -49,6 +49,7 @@ public class Game {
             this.white = "";
         }
 
+        this.status = "OPEN";
         this.fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
     }
 }
