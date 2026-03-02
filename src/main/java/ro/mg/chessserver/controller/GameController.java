@@ -48,19 +48,16 @@ public class GameController {
     }
 
     @GetMapping("/inprogress")
-    @ResponseBody
     public List<Diagram> getInProgressGames() {
         return gameService.getInProgressGames();
     }
 
     @GetMapping("/open")
-    @ResponseBody
     public List<Diagram> getOpenGames() {
         return gameService.getOpenGames();
     }
 
     @GetMapping("/id/{id}")
-    @ResponseBody
     public Game getGame(@PathVariable long id) {
         return gameService.getGame(id);
     }
