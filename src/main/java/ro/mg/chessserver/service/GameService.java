@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ro.mg.chessserver.dto.Open;
 import ro.mg.chessserver.model.Game;
 import ro.mg.chessserver.repository.GameRepository;
 import ro.mg.chessserver.dto.Diagram;
@@ -16,6 +17,11 @@ public class GameService {
 
     public GameService(@Autowired GameRepository gameRepository) {
         this.gameRepository = gameRepository;
+    }
+
+    public Game create(Open openRequest) {
+        Game game = new Game(openRequest);
+        return gameRepository.save(game);
     }
 
     public List<Diagram> getInProgressGames() {
