@@ -35,6 +35,13 @@ public class GameService {
     }
 
     public Game update(Join joinRequest) {
+
+        if (gameRepository.findByStatus("INPROGRESS").stream()
+                .filter((game) -> game.getWhite().equals(joinRequest.getName()) || game.getBlack().equals(joinRequest.getName()))
+                .findFirst()
+                .orElse(null) != null)
+            return null;
+
         Game game = gameRepository.findGameById(joinRequest.getId());
 
         if (joinRequest.getColor().equals("white"))
