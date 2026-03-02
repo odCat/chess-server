@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -55,6 +56,12 @@ public class GameController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         else
             return ResponseEntity.status(HttpStatus.CREATED).body(game);
+    }
+
+    @DeleteMapping("/id/{id}")
+    public ResponseEntity<Void> delete(@PathVariable long id) {
+        gameService.delete(id);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/inprogress")

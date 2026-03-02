@@ -55,6 +55,10 @@ public class GameService {
         return gameRepository.save(game);
     }
 
+    public void delete(long id) {
+        gameRepository.deleteById(id);
+    }
+
     public List<Diagram> getInProgressGames() {
         List<Diagram> diagramList = new ArrayList<>();
         for (Game game : gameRepository.findByStatus("INPROGRESS")) {
