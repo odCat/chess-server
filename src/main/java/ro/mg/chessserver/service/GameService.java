@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ro.mg.chessserver.dto.Join;
 import ro.mg.chessserver.dto.Open;
 import ro.mg.chessserver.model.Game;
 import ro.mg.chessserver.repository.GameRepository;
@@ -29,6 +30,20 @@ public class GameService {
             return existing;
 
         Game game = new Game(openRequest);
+
+        return gameRepository.save(game);
+    }
+
+    public Game update(Join joinRequest) {
+        Game game = gameRepository.findGameById(joinRequest.getId());
+
+        if (joinRequest.getColor().equals("white"))
+            game.setWhite(joinRequest.getName());
+
+        if (joinRequest.getColor().equals("black"))
+            game.setBlack(joinRequest.getName());
+
+        game.setStatus("INPROGRESS");
 
         return gameRepository.save(game);
     }

@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import ro.mg.chessserver.dto.Diagram;
 import ro.mg.chessserver.dto.Open;
+import ro.mg.chessserver.dto.Join;
 import ro.mg.chessserver.model.Game;
 import ro.mg.chessserver.service.GameService;
 
@@ -40,6 +40,16 @@ public class GameController {
     @PostMapping("/create")
     public ResponseEntity<Game> create(@Valid @RequestBody Open request) {
         Game game = gameService.create(request);
+
+        if (game == null)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        else
+            return ResponseEntity.status(HttpStatus.CREATED).body(game);
+    }
+
+    @PostMapping("/join")
+    public ResponseEntity<Game> join(@Valid @RequestBody Join join) {
+        Game game = gameService.update(join);
 
         if (game == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
