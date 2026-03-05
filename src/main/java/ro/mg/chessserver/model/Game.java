@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import ro.mg.chessserver.dto.Open;
+import ro.mg.chessserver.dto.game.Open;
 
 
 @Entity

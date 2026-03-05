@@ -1,4 +1,4 @@
-package ro.mg.chessserver.dto;
+package ro.mg.chessserver.dto.player;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

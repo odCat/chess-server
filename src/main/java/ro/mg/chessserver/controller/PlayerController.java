@@ -22,10 +22,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import ro.mg.chessserver.dto.Register;
+import ro.mg.chessserver.dto.player.Register;
 import ro.mg.chessserver.model.Player;
-import ro.mg.chessserver.dto.Login;
-import ro.mg.chessserver.dto.Update;
+import ro.mg.chessserver.dto.player.Login;
+import ro.mg.chessserver.dto.player.Update;
 import ro.mg.chessserver.service.PlayerService;
 
 

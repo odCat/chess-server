@@ -9,8 +9,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.springframework.beans.factory.annotation.Autowired;
 import ro.mg.chessserver.map.PlayerMapper;
 import ro.mg.chessserver.model.Player;
-import ro.mg.chessserver.dto.Login;
-import ro.mg.chessserver.dto.Update;
+import ro.mg.chessserver.dto.player.Login;
+import ro.mg.chessserver.dto.player.Update;
 import ro.mg.chessserver.service.PlayerService;
 
 

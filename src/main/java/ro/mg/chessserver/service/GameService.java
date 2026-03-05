@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ro.mg.chessserver.dto.Join;
-import ro.mg.chessserver.dto.Open;
+import ro.mg.chessserver.dto.game.Join;
+import ro.mg.chessserver.dto.game.Open;
 import ro.mg.chessserver.model.Game;
 import ro.mg.chessserver.repository.GameRepository;
-import ro.mg.chessserver.dto.Diagram;
+import ro.mg.chessserver.dto.game.Diagram;
 
 
 @Service

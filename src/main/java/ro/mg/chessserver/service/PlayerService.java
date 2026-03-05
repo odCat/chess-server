@@ -8,11 +8,11 @@ import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import ro.mg.chessserver.dto.Register;
+import ro.mg.chessserver.dto.player.Register;
 import ro.mg.chessserver.model.Player;
 import ro.mg.chessserver.repository.PlayerRepository;
-import ro.mg.chessserver.dto.Login;
-import ro.mg.chessserver.dto.Update;
+import ro.mg.chessserver.dto.player.Login;
+import ro.mg.chessserver.dto.player.Update;
 
 
 @Service
@@ -56,9 +56,9 @@ public class PlayerService {
 
     public Player login(Login login) {
         Player player = playerRepository.findByUsernameOrEmail(login.getUsernameOrEmail(), login.getUsernameOrEmail());
-        if (passwordEncoder.matches(login.getPassword(), player.getPassword()))
-                return player;
 
+        if (player != null && passwordEncoder.matches(login.getPassword(), player.getPassword()))
+                return player;
         return null;
     }
 

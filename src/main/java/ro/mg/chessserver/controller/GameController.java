@@ -20,9 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import ro.mg.chessserver.dto.Diagram;
-import ro.mg.chessserver.dto.Open;
-import ro.mg.chessserver.dto.Join;
+import ro.mg.chessserver.dto.game.Diagram;
+import ro.mg.chessserver.dto.game.Open;
+import ro.mg.chessserver.dto.game.Join;
 import ro.mg.chessserver.model.Game;
 import ro.mg.chessserver.service.GameService;
 

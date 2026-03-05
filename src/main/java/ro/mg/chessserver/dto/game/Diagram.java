@@ -1,4 +1,4 @@
-package ro.mg.chessserver.dto;
+package ro.mg.chessserver.dto.game;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

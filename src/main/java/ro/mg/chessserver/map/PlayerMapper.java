@@ -1,7 +1,7 @@
 package ro.mg.chessserver.map;
 
 import ro.mg.chessserver.model.Player;
-import ro.mg.chessserver.dto.Update;
+import ro.mg.chessserver.dto.player.Update;
 
 public class PlayerMapper {
 
