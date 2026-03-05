@@ -1,14 +1,14 @@
 insert into rooms (name)
 values ('Main');
 
-insert into players (email, username, password)
-values ('gigel@test.net', 'gigel', 'gigel');
+insert into players (email, username, password, full_name)
+values ('gigel@test.net', 'gigel', '$2a$10$deGoNd.s/q2nuJW5cq7jQeYTMglHVzF4ZMZLpa9OPF7f41hrw1Ypy', 'Gigel Test');
 
-insert into players (email, username, password)
-values ('andrei@test.net', 'andrei', 'andrei');
+insert into players (email, username, password, full_name)
+values ('costel@test.net', 'costel', '$2a$10$JoZNnJvJmkqkF9bUM2Lg8.Dhd0C.Iq4oeJg4jw2Z9hHV7Qe1gtFcS', 'Costel Test');
 
-insert into players (email, username, password)
-values ('dorel@test.net', 'dorel', 'dorel');
+insert into players (email, username, password, full_name)
+values ('andrei@test.net', 'andrei', '$2a$10$qK93ACsiMopKPIgk0wXG7.ezb0A46Qj7MYEcA1Fk.kuShSmDHlbn2', 'Andrei Test');
 
 insert into games (white, black, status, pgn, fen)
 values (
