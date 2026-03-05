@@ -5,8 +5,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.JpaSystemException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import ro.mg.chessserver.dto.Register;
 import ro.mg.chessserver.model.Player;
 import ro.mg.chessserver.repository.PlayerRepository;
 import ro.mg.chessserver.dto.Login;
@@ -17,10 +19,12 @@ import ro.mg.chessserver.dto.Update;
 public class PlayerService {
 
     private static final Logger log = LoggerFactory.getLogger(PlayerService.class);
-
+    private final PasswordEncoder passwordEncoder;
     private final PlayerRepository playerRepository;
 
-    public PlayerService(@Autowired PlayerRepository playerRepository) {
+    public PlayerService(@Autowired PlayerRepository playerRepository,
+                         @Autowired PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
         this.playerRepository = playerRepository;
     }
 
@@ -28,8 +32,10 @@ public class PlayerService {
         return playerRepository.findAll();
     }
 
-    public boolean addPlayer(Player player) {
+    public boolean addPlayer(Register register) {
+        Player player = createPlayer(register);
         try {
+            player.setPassword(passwordEncoder.encode(player.getPassword()));
             playerRepository.save(player);
             return true;
         } catch (JpaSystemException e) {
@@ -38,9 +44,19 @@ public class PlayerService {
         }
     }
 
+    private Player createPlayer(Register register) {
+        Player player = new Player();
+        player.setEmail(register.getEmail());
+        player.setUsername(register.getUsername());
+        player.setPassword(register.getPassword());
+        player.setFullName(register.getFullName());
+
+        return player;
+    }
+
     public Player login(Login login) {
         Player player = playerRepository.findByUsernameOrEmail(login.getUsernameOrEmail(), login.getUsernameOrEmail());
-        if (player.getPassword().equals(login.getPassword()))
+        if (passwordEncoder.matches(login.getPassword(), player.getPassword()))
                 return player;
 
         return null;
@@ -50,6 +66,7 @@ public class PlayerService {
         Player player = playerRepository.findById(id);
         if (player == null)
             return null;
+        update.setPassword(passwordEncoder.encode(update.getPassword()));
         player = createNewPlayer(id, player, update);
         playerRepository.save(player);
 

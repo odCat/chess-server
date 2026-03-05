@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import ro.mg.chessserver.dto.Register;
 import ro.mg.chessserver.model.Player;
 import ro.mg.chessserver.dto.Login;
 import ro.mg.chessserver.dto.Update;
@@ -46,9 +47,9 @@ public class PlayerController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Player> register(@Valid @RequestBody Player player) {
-        if (playerService.addPlayer(player))
-            return ResponseEntity.status(HttpStatus.CREATED).body(player);
+    public ResponseEntity<Register> register(@Valid @RequestBody Register register) {
+        if (playerService.addPlayer(register))
+            return ResponseEntity.status(HttpStatus.CREATED).body(register);
         else
             return ResponseEntity.status(HttpStatus.OK).body(null);
     }
