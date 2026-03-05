@@ -1,11 +1,3 @@
-drop table if exists rooms;
-
-create table rooms (
-    id integer primary key,
-    name text not null
-);
-
-
 drop table if exists players;
 
 create table players (
@@ -14,9 +6,7 @@ create table players (
      username text not null unique,
      password text not null,
      full_name text,
-     image blob,
-     room integer default 1 not null,
-     foreign key (room) references rooms(id)
+     image blob
 );
 
 
