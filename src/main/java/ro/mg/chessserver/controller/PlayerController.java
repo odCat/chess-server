@@ -31,7 +31,6 @@ import ro.mg.chessserver.service.PlayerService;
 
 @RestController
 @RequestMapping("/players")
-@CrossOrigin(origins = "http://localhost:5173")
 public class PlayerController {
 
     private final PlayerService playerService;
