@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.sqlite.SQLiteException;
+import ro.mg.chessserver.exception.GameAreadyExisting;
 
 
 @RestControllerAdvice
@@ -28,6 +29,14 @@ public class GeneralControllerAdvice {
         Map<String, String> errorResponse = new HashMap<>();
         String message = exception.getMessage();
         errorResponse.put("error", message.substring(message.indexOf("(") + 1, message.indexOf(")")));
+        return errorResponse;
+    }
+
+    @ResponseStatus(value = HttpStatus.FORBIDDEN)
+    @ExceptionHandler(GameAreadyExisting.class)
+    public Map<String, String> handleCreateOrJoinWhenHasGameInProgress(SQLiteException exception) throws IOException {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("error", exception.getMessage());
         return errorResponse;
     }
 }

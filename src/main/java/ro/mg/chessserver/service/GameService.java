@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.mg.chessserver.dto.game.Join;
 import ro.mg.chessserver.dto.game.Open;
+import ro.mg.chessserver.exception.GameAreadyExisting;
 import ro.mg.chessserver.model.Game;
 import ro.mg.chessserver.repository.GameRepository;
 import ro.mg.chessserver.dto.game.Diagram;
@@ -21,13 +22,21 @@ public class GameService {
     }
 
     public Game create(Open openRequest) {
-        Game existing = gameRepository.findByStatus("OPEN").stream()
+        Game openGame = gameRepository.findByStatus("OPEN").stream()
                 .filter((game) -> game.getWhite().equals(openRequest.getName()) || game.getBlack().equals(openRequest.getName()))
                 .findFirst()
                 .orElse(null);
 
-        if (existing != null)
-            return existing;
+        if (openGame != null)
+            return openGame;
+
+        Game inprogressGame = gameRepository.findByStatus("INPROGRESS").stream()
+                .filter((game) -> game.getWhite().equals(openRequest.getName()) || game.getBlack().equals(openRequest.getName()))
+                .findFirst()
+                .orElse(null);
+
+        if (inprogressGame != null)
+            throw new GameAreadyExisting("You have a game in progress");
 
         Game game = new Game(openRequest);
 
@@ -40,8 +49,13 @@ public class GameService {
                 .filter((game) -> game.getWhite().equals(joinRequest.getName()) || game.getBlack().equals(joinRequest.getName()))
                 .findFirst()
                 .orElse(null) != null)
-            return null;
+            throw new GameAreadyExisting("You already have a game in progress.");
 
+        if (gameRepository.findByStatus("OPEN").stream()
+                .filter((game) -> game.getWhite().equals(joinRequest.getName()) || game.getBlack().equals(joinRequest.getName()))
+                .findFirst()
+                .orElse(null) != null)
+            throw new GameAreadyExisting("You have an open game.");
         Game game = gameRepository.findGameById(joinRequest.getId());
 
         if (joinRequest.getColor().equals("white"))
