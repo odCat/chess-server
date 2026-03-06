@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jpa.JpaSystemException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +22,15 @@ public class PlayerService {
     private static final Logger log = LoggerFactory.getLogger(PlayerService.class);
     private final PasswordEncoder passwordEncoder;
     private final PlayerRepository playerRepository;
+    private final JwtService jwtService;
 
     public PlayerService(@Autowired PlayerRepository playerRepository,
-                         @Autowired PasswordEncoder passwordEncoder) {
+                         @Autowired PasswordEncoder passwordEncoder,
+                         @Autowired JwtService jwtService)
+    {
         this.passwordEncoder = passwordEncoder;
         this.playerRepository = playerRepository;
+        this.jwtService = jwtService;
     }
 
     public List<Player> getPlayers() {
@@ -54,12 +59,13 @@ public class PlayerService {
         return player;
     }
 
-    public Player login(Login login) {
+    public String authenticate(Login login) {
         Player player = playerRepository.findByUsernameOrEmail(login.getUsernameOrEmail(), login.getUsernameOrEmail());
 
-        if (player != null && passwordEncoder.matches(login.getPassword(), player.getPassword()))
-                return player;
-        return null;
+        if (player != null)
+                return jwtService.createToken(player.getId());
+
+        throw new UsernameNotFoundException("Invalid username or password");
     }
 
     public Player update(long id, Update update) {

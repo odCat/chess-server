@@ -87,33 +87,33 @@ public class TestPlayerService {
     }
 
     @Test
-    void testLoginSuccessful() {
+    void testAuthenticateSuccessful() {
         Player expected = new Player(1, "john@doe.net", "johndoe", "password", "John Doe");
         playerService.addPlayer(expected);
         Login login = new Login("johndoe", "password");
 
-        Player actual = playerService.login(login);
+        Player actual = playerService.authenticate(login);
         assertEquals(expected, actual);
     }
 
     @Test
-    void testLoginNonExistingUser() {
+    void testAuthenticateNonExistingUser() {
         Player player1 = new Player(1, "john@doe.net", "johndoe", "password", "John Doe");
         Player player2 = new Player(2, "jane@doe.net", "janedoe", "janepassword", "Jane Doe");
         playerService.addPlayer(player1);
         Login login = new Login(player2.getUsername(), player2.getPassword());
 
-        Player actual = playerService.login(login);
+        Player actual = playerService.authenticate(login);
         assertNull(actual);
     }
 
     @Test
-    void testLoginWithWrongPassword() {
+    void testAuthenticateWithWrongPassword() {
         Player player1 = new Player(1, "john@doe.net", "johndoe", "password", "John Doe");
         playerService.addPlayer(player1);
         Login login = new Login(player1.getUsername(), "wrong_password");
 
-        Player actual = playerService.login(login);
+        Player actual = playerService.authenticate(login);
         assertNull(actual);
     }
 
