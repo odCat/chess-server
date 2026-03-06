@@ -4,6 +4,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -39,14 +40,9 @@ public class PlayerService {
 
     public boolean addPlayer(Register register) {
         Player player = createPlayer(register);
-        try {
-            player.setPassword(passwordEncoder.encode(player.getPassword()));
-            playerRepository.save(player);
-            return true;
-        } catch (JpaSystemException e) {
-            log.error(e.getMessage());
-            return false;
-        }
+        player.setPassword(passwordEncoder.encode(player.getPassword()));
+        playerRepository.save(player);
+        return true;
     }
 
     private Player createPlayer(Register register) {
