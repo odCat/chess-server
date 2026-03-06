@@ -62,9 +62,7 @@ public class PlayerService {
     public Login authenticate(Login login) {
         Player player = playerRepository.findByUsernameOrEmail(login.getUsernameOrEmail(), login.getUsernameOrEmail());
 
-        log.info("Authenticating user: {}", player);
-
-        if (player != null) {
+        if (player != null && passwordEncoder.matches(login.getPassword(), player.getPassword())) {
             login.setId(player.getId());
             login.setPassword(jwtService.createToken(player.getId()));
             return login;
