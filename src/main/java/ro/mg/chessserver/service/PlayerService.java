@@ -59,11 +59,16 @@ public class PlayerService {
         return player;
     }
 
-    public String authenticate(Login login) {
+    public Login authenticate(Login login) {
         Player player = playerRepository.findByUsernameOrEmail(login.getUsernameOrEmail(), login.getUsernameOrEmail());
 
-        if (player != null)
-                return jwtService.createToken(player.getId());
+        log.info("Authenticating user: {}", player);
+
+        if (player != null) {
+            login.setId(player.getId());
+            login.setPassword(jwtService.createToken(player.getId()));
+            return login;
+        }
 
         throw new UsernameNotFoundException("Invalid username or password");
     }

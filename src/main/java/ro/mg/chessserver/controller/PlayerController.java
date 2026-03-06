@@ -55,13 +55,10 @@ public class PlayerController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@Valid @RequestBody Login login) {
-        String token = playerService.authenticate(login);
+    public ResponseEntity<Login> login(@Valid @RequestBody Login login) {
+        login = playerService.authenticate(login);
 
-        if (token == null)
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        else
-            return ResponseEntity.status(HttpStatus.OK).body(token);
+        return ResponseEntity.status(HttpStatus.OK).body(login);
     }
 
     @PatchMapping
