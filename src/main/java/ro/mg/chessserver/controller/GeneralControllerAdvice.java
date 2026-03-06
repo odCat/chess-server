@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.sqlite.SQLiteException;
-import ro.mg.chessserver.exception.GameAreadyExisting;
+import ro.mg.chessserver.exception.GameAlreadyExists;
+import ro.mg.chessserver.exception.GameCannotBeDeletedException;
+import ro.mg.chessserver.exception.GameNotFoundException;
 
 
 @RestControllerAdvice
@@ -33,8 +35,24 @@ public class GeneralControllerAdvice {
     }
 
     @ResponseStatus(value = HttpStatus.FORBIDDEN)
-    @ExceptionHandler(GameAreadyExisting.class)
+    @ExceptionHandler(GameAlreadyExists.class)
     public Map<String, String> handleCreateOrJoinWhenHasGameInProgress(SQLiteException exception) throws IOException {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("error", exception.getMessage());
+        return errorResponse;
+    }
+
+    @ResponseStatus(value = HttpStatus.FORBIDDEN)
+    @ExceptionHandler(GameCannotBeDeletedException.class)
+    public Map<String, String> handleUnauthorizedGameDeletion(GameCannotBeDeletedException exception) throws IOException {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("error", exception.getMessage());
+        return errorResponse;
+    }
+
+    @ResponseStatus(value = HttpStatus.FORBIDDEN)
+    @ExceptionHandler(GameNotFoundException.class)
+    public Map<String, String> gameNotFound(GameNotFoundException exception) throws IOException {
         Map<String, String> errorResponse = new HashMap<>();
         errorResponse.put("error", exception.getMessage());
         return errorResponse;

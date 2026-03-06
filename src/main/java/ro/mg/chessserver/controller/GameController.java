@@ -4,12 +4,14 @@ import jakarta.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +33,7 @@ import ro.mg.chessserver.service.GameService;
 @RequestMapping("/games")
 public class GameController {
 
+    private static final Logger log = LoggerFactory.getLogger(GameController.class);
     private final GameService gameService;
 
     public GameController(@Autowired GameService gameService) {
@@ -49,7 +52,7 @@ public class GameController {
 
     @PostMapping("/join")
     public ResponseEntity<Game> join(@Valid @RequestBody Join join) {
-        Game game = gameService.update(join);
+        Game game = gameService.join(join);
 
         if (game == null)
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
@@ -57,9 +60,11 @@ public class GameController {
             return ResponseEntity.status(HttpStatus.CREATED).body(game);
     }
 
-    @DeleteMapping("/id/{id}")
-    public ResponseEntity<Void> delete(@PathVariable long id) {
-        gameService.delete(id);
+    @DeleteMapping("/id/{gameId}")
+    public ResponseEntity<Void> delete(@PathVariable long gameId, Authentication auth) {
+        String userId = auth.getName();
+        log.info("User {} requested to delete game with id {}", userId, gameId);
+        gameService.delete(Long.parseLong(userId), gameId);
         return ResponseEntity.ok().build();
     }
 
