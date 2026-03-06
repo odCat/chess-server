@@ -15,6 +15,10 @@ public class Login {
 
     Long id;
 
+    String username;
+    String email;
+    String fullName;
+
     @NotBlank(message = "Email or username must not be blank")
     private String usernameOrEmail;
 

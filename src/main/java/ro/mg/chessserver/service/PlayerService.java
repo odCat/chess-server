@@ -64,6 +64,9 @@ public class PlayerService {
 
         if (player != null && passwordEncoder.matches(login.getPassword(), player.getPassword())) {
             login.setId(player.getId());
+            login.setUsername(player.getUsername());
+            login.setEmail(player.getEmail());
+            login.setFullName(player.getFullName());
             login.setPassword(jwtService.createToken(player.getId()));
             return login;
         }
