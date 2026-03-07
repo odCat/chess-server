@@ -63,7 +63,6 @@ public class Player {
                player.getEmail().equalsIgnoreCase(this.getEmail()) &&
                player.getUsername().equalsIgnoreCase(this.getUsername()) &&
                player.getPassword().equals(this.getPassword()) &&
-               player.getFullName().equalsIgnoreCase(this.getFullName())
-        ;
+               player.getFullName().equalsIgnoreCase(this.getFullName());
     }
 }

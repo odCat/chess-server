@@ -102,6 +102,8 @@ public class GameService {
         if (!game.getWhite().equals(player.getUsername()) && !game.getBlack().equals(player.getUsername())) {
             throw new GameCannotBeUpdatedException("Only a participant can move");
         }
+
+        // check is player's turn
         // check move is valid
         // update game in database
         // return the new state of the game
