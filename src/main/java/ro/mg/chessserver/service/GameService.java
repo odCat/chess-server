@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.mg.chessserver.dto.game.Join;
+import ro.mg.chessserver.dto.game.Move;
 import ro.mg.chessserver.dto.game.Open;
 import ro.mg.chessserver.exception.GameAlreadyExists;
 import ro.mg.chessserver.exception.GameCannotBeDeletedException;
+import ro.mg.chessserver.exception.GameCannotBeUpdatedException;
 import ro.mg.chessserver.exception.GameNotFoundException;
 import ro.mg.chessserver.model.Game;
 import ro.mg.chessserver.model.Player;
@@ -90,6 +92,22 @@ public class GameService {
         gameRepository.deleteById(gameId);
     }
 
+    public Move move(long userId, long gameId, Move move) {
+        Game game = gameRepository.findGameById(gameId);
+
+        if (game == null)
+            throw new GameNotFoundException("Could not find the game with id: " + gameId);
+
+        Player player = playerRepository.findById(userId);
+        if (!game.getWhite().equals(player.getUsername()) && !game.getBlack().equals(player.getUsername())) {
+            throw new GameCannotBeUpdatedException("Only a participant can move");
+        }
+        // check move is valid
+        // update game in database
+        // return the new state of the game
+        return move;
+    }
+
     public List<Diagram> getInProgressGames() {
         List<Diagram> diagramList = new ArrayList<>();
         for (Game game : gameRepository.findByStatus("INPROGRESS")) {
@@ -107,6 +125,7 @@ public class GameService {
 
         return diagramList;
     }
+
     public Game getGame(long id) {
         return gameRepository.findGameById(id);
     }

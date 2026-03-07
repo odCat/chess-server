@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import ro.mg.chessserver.dto.game.Diagram;
+import ro.mg.chessserver.dto.game.Move;
 import ro.mg.chessserver.dto.game.Open;
 import ro.mg.chessserver.dto.game.Join;
 import ro.mg.chessserver.model.Game;
@@ -81,6 +82,12 @@ public class GameController {
     @GetMapping("/id/{id}")
     public Game getGame(@PathVariable long id) {
         return gameService.getGame(id);
+    }
+
+    @PostMapping("/{gameId}/move")
+    public Move move(@PathVariable long gameId, @Valid @RequestBody Move move, Authentication auth) {
+        long userId = Long.parseLong(auth.getName());
+        return gameService.move(userId, gameId, move);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

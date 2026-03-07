@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.sqlite.SQLiteException;
+
 import ro.mg.chessserver.exception.GameAlreadyExists;
 import ro.mg.chessserver.exception.GameCannotBeDeletedException;
+import ro.mg.chessserver.exception.GameCannotBeUpdatedException;
 import ro.mg.chessserver.exception.GameNotFoundException;
 
 
@@ -45,6 +47,14 @@ public class GeneralControllerAdvice {
     @ResponseStatus(value = HttpStatus.FORBIDDEN)
     @ExceptionHandler(GameCannotBeDeletedException.class)
     public Map<String, String> handleUnauthorizedGameDeletion(GameCannotBeDeletedException exception) throws IOException {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("error", exception.getMessage());
+        return errorResponse;
+    }
+
+    @ResponseStatus(value = HttpStatus.FORBIDDEN)
+    @ExceptionHandler(GameCannotBeUpdatedException.class)
+    public Map<String, String> handleUnauthorizedGameMove(GameCannotBeUpdatedException exception) throws IOException {
         Map<String, String> errorResponse = new HashMap<>();
         errorResponse.put("error", exception.getMessage());
         return errorResponse;
