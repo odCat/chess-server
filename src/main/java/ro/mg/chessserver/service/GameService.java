@@ -1,15 +1,19 @@
 package ro.mg.chessserver.service;
 
+import com.github.bhlangonijr.chesslib.Board;
+import com.github.bhlangonijr.chesslib.Side;
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.mg.chessserver.dto.game.Join;
 import ro.mg.chessserver.dto.game.Move;
 import ro.mg.chessserver.dto.game.Open;
-import ro.mg.chessserver.exception.GameAlreadyExists;
 import ro.mg.chessserver.exception.GameCannotBeDeletedException;
 import ro.mg.chessserver.exception.GameCannotBeUpdatedException;
+import ro.mg.chessserver.exception.GameMoveException;
 import ro.mg.chessserver.exception.GameNotFoundException;
 import ro.mg.chessserver.model.Game;
 import ro.mg.chessserver.model.Player;
@@ -21,6 +25,7 @@ import ro.mg.chessserver.repository.PlayerRepository;
 @Service
 public class GameService {
 
+    private static final Logger log = LoggerFactory.getLogger(GameService.class);
     private final GameRepository gameRepository;
     private final PlayerRepository playerRepository;
 
@@ -29,9 +34,9 @@ public class GameService {
         this.playerRepository = playerRepository;
     }
 
-    public Game create(Open openRequest) {
+    public Game create(Open request) {
         Game openGame = gameRepository.findByStatus("OPEN").stream()
-                .filter((game) -> game.getWhite().equals(openRequest.getName()) || game.getBlack().equals(openRequest.getName()))
+                .filter((game) -> game.getWhite().equals(request.getName()) || game.getBlack().equals(request.getName()))
                 .findFirst()
                 .orElse(null);
 
@@ -39,31 +44,33 @@ public class GameService {
             return openGame;
 
         Game inprogressGame = gameRepository.findByStatus("INPROGRESS").stream()
-                .filter((game) -> game.getWhite().equals(openRequest.getName()) || game.getBlack().equals(openRequest.getName()))
+                .filter((game) -> game.getWhite().equals(request.getName()) || game.getBlack().equals(request.getName()))
                 .findFirst()
                 .orElse(null);
 
-        if (inprogressGame != null)
-            throw new GameAlreadyExists("You have a game in progress");
+//        if (inprogressGame != null)
+//            throw new GameAlreadyExists("You have a game in progress");
 
-        Game game = new Game(openRequest);
+        Game game = new Game(request);
 
-        return gameRepository.save(game);
+        game = gameRepository.save(game);
+
+        return game;
     }
 
     public Game join(Join joinRequest) {
 
-        if (gameRepository.findByStatus("INPROGRESS").stream()
-                .filter((game) -> game.getWhite().equals(joinRequest.getName()) || game.getBlack().equals(joinRequest.getName()))
-                .findFirst()
-                .orElse(null) != null)
-            throw new GameAlreadyExists("You already have a game in progress.");
+//        if (gameRepository.findByStatus("INPROGRESS").stream()
+//                .filter((game) -> game.getWhite().equals(joinRequest.getName()) || game.getBlack().equals(joinRequest.getName()))
+//                .findFirst()
+//                .orElse(null) != null)
+//            throw new GameAlreadyExists("You already have a game in progress.");
 
-        if (gameRepository.findByStatus("OPEN").stream()
-                .filter((game) -> game.getWhite().equals(joinRequest.getName()) || game.getBlack().equals(joinRequest.getName()))
-                .findFirst()
-                .orElse(null) != null)
-            throw new GameAlreadyExists("You have an open game.");
+//        if (gameRepository.findByStatus("OPEN").stream()
+//                .filter((game) -> game.getWhite().equals(joinRequest.getName()) || game.getBlack().equals(joinRequest.getName()))
+//                .findFirst()
+//                .orElse(null) != null)
+//            throw new GameAlreadyExists("You have an open game.");
 
         Game game = gameRepository.findGameById(joinRequest.getId());
 
@@ -99,15 +106,49 @@ public class GameService {
             throw new GameNotFoundException("Could not find the game with id: " + gameId);
 
         Player player = playerRepository.findById(userId);
+
+        log.info("Move: {}", move);
+        log.info("Player: {}", player);
+
         if (!game.getWhite().equals(player.getUsername()) && !game.getBlack().equals(player.getUsername())) {
             throw new GameCannotBeUpdatedException("Only a participant can move");
         }
+        if (move.getColor().equals("w"))
+            if (!game.getWhite().equals(player.getUsername()))
+                throw new GameMoveException("You cannot move for another player");
+        if (move.getColor().equals("b"))
+            if (!game.getBlack().equals(player.getUsername()))
+                throw new GameMoveException("You cannot move for another player");
 
-        // check is player's turn
-        // check move is valid
-        // update game in database
-        // return the new state of the game
+        checkAndMove(game, move);
+
         return move;
+    }
+
+    private void checkAndMove(Game game, Move move) {
+        log.info("PGN: {}", game.getPgn());
+        Board board = new Board();
+        board.loadFromFen(game.getFen());
+        log.info("FEN: {}", game.getFen());
+
+        com.github.bhlangonijr.chesslib.move.Move moveObj =
+            new com.github.bhlangonijr.chesslib.move.Move(move.getFrom() + move.getTo(), Side.WHITE);
+
+        boolean valid = board.isMoveLegal(moveObj, true);
+
+        if (valid) {
+            board.doMove(moveObj);
+            // TODO: Check the result of the client is correct
+            if (board.isMated() || board.isDraw())
+                game.setStatus("FINISHED");
+            game.setFen(board.getFen());
+            game.setPgn(move.getPgn());
+            gameRepository.save(game);
+            log.info("New FEN: {}", board.getFen());
+            log.info("New PGN: {}", game.getPgn());
+        } else {
+            throw new GameMoveException("Invalid move");
+        }
     }
 
     public List<Diagram> getInProgressGames() {

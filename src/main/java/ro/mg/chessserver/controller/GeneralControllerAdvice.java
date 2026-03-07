@@ -13,6 +13,7 @@ import org.sqlite.SQLiteException;
 import ro.mg.chessserver.exception.GameAlreadyExists;
 import ro.mg.chessserver.exception.GameCannotBeDeletedException;
 import ro.mg.chessserver.exception.GameCannotBeUpdatedException;
+import ro.mg.chessserver.exception.GameMoveException;
 import ro.mg.chessserver.exception.GameNotFoundException;
 
 
@@ -63,6 +64,14 @@ public class GeneralControllerAdvice {
     @ResponseStatus(value = HttpStatus.FORBIDDEN)
     @ExceptionHandler(GameNotFoundException.class)
     public Map<String, String> gameNotFound(GameNotFoundException exception) throws IOException {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("error", exception.getMessage());
+        return errorResponse;
+    }
+
+    @ResponseStatus(value = HttpStatus.FORBIDDEN)
+    @ExceptionHandler(GameMoveException.class)
+    public Map<String, String> gameNotFound(GameMoveException exception) throws IOException {
         Map<String, String> errorResponse = new HashMap<>();
         errorResponse.put("error", exception.getMessage());
         return errorResponse;

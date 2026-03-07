@@ -12,8 +12,8 @@ import lombok.ToString;
 @ToString
 public class Move
 {
-    @NotBlank(message = "Position should not be blank")
-    private String fen;
+    @NotBlank(message = "Color should not be blank")
+    private String color;
 
     @NotBlank(message = "From square should not be blank")
     private String from;
@@ -22,4 +22,10 @@ public class Move
     private String to;
 
     private String promotion;
+
+    @NotBlank(message = "Position should not be blank")
+    private String fen;
+
+    @NotBlank(message = "PGN should not be blank")
+    private String pgn;
 }
