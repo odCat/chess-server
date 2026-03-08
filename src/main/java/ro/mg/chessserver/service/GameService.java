@@ -7,6 +7,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import ro.mg.chessserver.dto.game.Join;
 import ro.mg.chessserver.dto.game.Move;
@@ -28,10 +29,15 @@ public class GameService {
     private static final Logger log = LoggerFactory.getLogger(GameService.class);
     private final GameRepository gameRepository;
     private final PlayerRepository playerRepository;
+    private final SimpMessagingTemplate messagingTemplate;
 
-    public GameService(@Autowired GameRepository gameRepository, @Autowired PlayerRepository playerRepository) {
+    public GameService(@Autowired GameRepository gameRepository,
+                       @Autowired PlayerRepository playerRepository,
+                       @Autowired SimpMessagingTemplate messagingTemplate)
+    {
         this.gameRepository = gameRepository;
         this.playerRepository = playerRepository;
+        this.messagingTemplate = messagingTemplate;
     }
 
     public Game create(Open request) {
@@ -120,12 +126,12 @@ public class GameService {
             if (!game.getBlack().equals(player.getUsername()))
                 throw new GameMoveException("You cannot move for another player");
 
-        checkAndMove(game, move);
+        checkMoveAndBroadcast(game, move);
 
         return move;
     }
 
-    private void checkAndMove(Game game, Move move) {
+    private void checkMoveAndBroadcast(Game game, Move move) {
         log.info("PGN: {}", game.getPgn());
         Board board = new Board();
         board.loadFromFen(game.getFen());
@@ -134,10 +140,8 @@ public class GameService {
         com.github.bhlangonijr.chesslib.move.Move moveObj =
             new com.github.bhlangonijr.chesslib.move.Move(move.getFrom() + move.getTo(), Side.WHITE);
 
-        boolean valid = board.isMoveLegal(moveObj, true);
-
-        if (valid) {
-            board.doMove(moveObj);
+        if (board.doMove(moveObj, true)) {
+            messagingTemplate.convertAndSend("/topic/game/" + game.getId(), move);
             // TODO: Check the result of the client is correct
             if (board.isMated() || board.isDraw())
                 game.setStatus("FINISHED");
