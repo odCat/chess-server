@@ -84,22 +84,6 @@ values (
 
 insert into games (white, black, status, pgn, fen)
 values (
-           '',
-           'gigel',
-           'OPEN',
-           '[Event "?"]
-[Site "?"]
-[Date "????.??.??"]
-[Round "?"]
-[White "?"]
-[Black "?"]
-[Result "*"]',
-           'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
-       )
-;
-
-insert into games (white, black, status, pgn, fen)
-values (
            'andrei',
            '',
            'OPEN',
