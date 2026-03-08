@@ -48,16 +48,6 @@ values (
 
 insert into games (white, black, status, pgn, fen)
 values (
-           'Bogoliubov',
-           'Alehin',
-           'INPROGRESS',
-           '[Event "?"]\n[Site "?"]\n[Date "????.??.??"]\n[Round "?"]\n[White "?"]\n[Black "?"]\n[Result "*"]\n1. d4 d5 2. c4 dxc4 3. Nf3 Nf6 4. Nc3 a6 5. e4 b5 6. e5 Nd5 7. Ng5 e6 8. Qf3 Qd7 9. Nxd5 exd5 10. a3 Nc6 11. Be3 Nd8 12. Be2 Qf5 13. Qg3 h6 14. Nh3 c6 15. f4 Qc2 16. Qf2 *',
-           'r1bnkb1r/5pp1/p1p4p/1p1pP3/2pP1P2/P3B2N/1Pq1BQPP/R3K2R b KQkq - 2 16'
-       )
-;
-
-insert into games (white, black, status, pgn, fen)
-values (
            'Yates',
            'Alehin',
            'INPROGRESS',
@@ -110,7 +100,7 @@ values (
 
 insert into games (white, black, status, pgn, fen)
 values (
-           'costel',
+           'andrei',
            '',
            'OPEN',
            '[Event "?"]
@@ -126,24 +116,8 @@ values (
 
 insert into games (white, black, status, pgn, fen)
 values (
-           'amihnea',
+           'gigel',
            'costel',
-           'INPROGRESS',
-           '[Event "?"]
-[Site "?"]
-[Date "????.??.??"]
-[Round "?"]
-[White "?"]
-[Black "?"]
-[Result "*"]',
-           'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
-       )
-;
-
-insert into games (white, black, status, pgn, fen)
-values (
-           'Fischer',
-           'Spasski',
            'FINISHED',
            '[Event "F/S Return Match"]
 [Site "Belgrade, Serbia JUG"]
