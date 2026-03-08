@@ -89,6 +89,8 @@ public class GameService {
 
         game.setStatus("INPROGRESS");
 
+        messagingTemplate.convertAndSend("/topic/game/" + game.getId(), game);
+
         return gameRepository.save(game);
     }
 
