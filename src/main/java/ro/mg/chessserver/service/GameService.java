@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import ro.mg.chessserver.dto.game.Join;
 import ro.mg.chessserver.dto.game.Move;
 import ro.mg.chessserver.dto.game.Open;
+import ro.mg.chessserver.exception.GameAlreadyExists;
 import ro.mg.chessserver.exception.GameCannotBeDeletedException;
 import ro.mg.chessserver.exception.GameCannotBeUpdatedException;
 import ro.mg.chessserver.exception.GameMoveException;
@@ -54,8 +55,8 @@ public class GameService {
                 .findFirst()
                 .orElse(null);
 
-//        if (inprogressGame != null)
-//            throw new GameAlreadyExists("You have a game in progress");
+        if (inprogressGame != null)
+            throw new GameAlreadyExists("You have a game in progress");
 
         Game game = new Game(request);
 
@@ -66,17 +67,17 @@ public class GameService {
 
     public Game join(Join joinRequest) {
 
-//        if (gameRepository.findByStatus("INPROGRESS").stream()
-//                .filter((game) -> game.getWhite().equals(joinRequest.getName()) || game.getBlack().equals(joinRequest.getName()))
-//                .findFirst()
-//                .orElse(null) != null)
-//            throw new GameAlreadyExists("You already have a game in progress.");
+        if (gameRepository.findByStatus("INPROGRESS").stream()
+                .filter((game) -> game.getWhite().equals(joinRequest.getName()) || game.getBlack().equals(joinRequest.getName()))
+                .findFirst()
+                .orElse(null) != null)
+            throw new GameAlreadyExists("You already have a game in progress.");
 
-//        if (gameRepository.findByStatus("OPEN").stream()
-//                .filter((game) -> game.getWhite().equals(joinRequest.getName()) || game.getBlack().equals(joinRequest.getName()))
-//                .findFirst()
-//                .orElse(null) != null)
-//            throw new GameAlreadyExists("You have an open game.");
+        if (gameRepository.findByStatus("OPEN").stream()
+                .filter((game) -> game.getWhite().equals(joinRequest.getName()) || game.getBlack().equals(joinRequest.getName()))
+                .findFirst()
+                .orElse(null) != null)
+            throw new GameAlreadyExists("You have an open game.");
 
         Game game = gameRepository.findGameById(joinRequest.getId());
 
@@ -110,6 +111,8 @@ public class GameService {
 
         if (game == null)
             throw new GameNotFoundException("Could not find the game with id: " + gameId);
+        if (game.getStatus().equals("FINISHED"))
+            throw new GameCannotBeUpdatedException("The game is already finished.");
 
         Player player = playerRepository.findById(userId);
 
