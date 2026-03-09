@@ -25,9 +25,10 @@ public class PlayerService {
     private final PlayerRepository playerRepository;
     private final JwtService jwtService;
 
-    public PlayerService(@Autowired PlayerRepository playerRepository,
-                         @Autowired PasswordEncoder passwordEncoder,
-                         @Autowired JwtService jwtService)
+    @Autowired
+    public PlayerService(PlayerRepository playerRepository,
+                         PasswordEncoder passwordEncoder,
+                         JwtService jwtService)
     {
         this.passwordEncoder = passwordEncoder;
         this.playerRepository = playerRepository;

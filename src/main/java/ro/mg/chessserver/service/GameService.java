@@ -32,9 +32,10 @@ public class GameService {
     private final PlayerRepository playerRepository;
     private final SimpMessagingTemplate messagingTemplate;
 
-    public GameService(@Autowired GameRepository gameRepository,
-                       @Autowired PlayerRepository playerRepository,
-                       @Autowired SimpMessagingTemplate messagingTemplate)
+    @Autowired
+    public GameService(GameRepository gameRepository,
+                       PlayerRepository playerRepository,
+                       SimpMessagingTemplate messagingTemplate)
     {
         this.gameRepository = gameRepository;
         this.playerRepository = playerRepository;
