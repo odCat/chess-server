@@ -36,7 +36,7 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.GET,"/games/id/**").permitAll()
                     .requestMatchers(HttpMethod.POST,"/players/login").permitAll()
                     .requestMatchers("/players/register").anonymous()
-                    .requestMatchers("/players/profile/*").permitAll()
+                    .requestMatchers("/players/history/*").permitAll()
                     .requestMatchers("/websocket/**").permitAll()
                     .anyRequest().authenticated())
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))

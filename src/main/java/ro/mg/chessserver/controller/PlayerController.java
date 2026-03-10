@@ -76,7 +76,7 @@ public class PlayerController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/profile/{id}")
+    @GetMapping("/history/{id}")
     public List<Game> getHistory(@PathVariable long id) {
         return playerService.getHistory(id);
     }
