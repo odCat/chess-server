@@ -1,5 +1,6 @@
 package ro.mg.chessserver.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +12,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import ro.mg.chessserver.dto.player.Register;
+import ro.mg.chessserver.model.Game;
 import ro.mg.chessserver.model.Player;
+import ro.mg.chessserver.repository.GameRepository;
 import ro.mg.chessserver.repository.PlayerRepository;
 import ro.mg.chessserver.dto.player.Login;
 import ro.mg.chessserver.dto.player.Update;
@@ -23,15 +26,18 @@ public class PlayerService {
     private static final Logger log = LoggerFactory.getLogger(PlayerService.class);
     private final PasswordEncoder passwordEncoder;
     private final PlayerRepository playerRepository;
+    private final GameRepository gameRepository;
     private final JwtService jwtService;
 
     @Autowired
     public PlayerService(PlayerRepository playerRepository,
                          PasswordEncoder passwordEncoder,
+                         GameRepository gameRepository,
                          JwtService jwtService)
     {
         this.passwordEncoder = passwordEncoder;
         this.playerRepository = playerRepository;
+        this.gameRepository = gameRepository;
         this.jwtService = jwtService;
     }
 
@@ -80,6 +86,11 @@ public class PlayerService {
         playerRepository.save(player);
 
         return player;
+    }
+
+    public List<Game> getHistory(long id) {
+        String username = playerRepository.findById(id).getUsername();
+        return new ArrayList<>(gameRepository.findGameHistory(username, "FINISHED"));
     }
 
     private Player createNewPlayer(long id, Player oldPlayer, Update update) {
