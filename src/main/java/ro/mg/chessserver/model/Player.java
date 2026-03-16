@@ -41,6 +41,8 @@ public class Player {
 
     private String fullName;
 
+    private String created;
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null)

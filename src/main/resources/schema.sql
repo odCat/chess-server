@@ -1,12 +1,13 @@
 drop table if exists players;
 
 create table players (
-     id integer primary key,
-     email text not null unique,
-     username text not null unique,
-     password text not null,
-     full_name text,
-     image blob
+    id integer primary key,
+    email text not null unique,
+    username text not null unique,
+    password text not null,
+    full_name text,
+    created text,
+    image blob
 );
 
 
