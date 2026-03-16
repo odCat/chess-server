@@ -18,6 +18,7 @@ create table games (
     white_id integer default 0,
     black text default '',
     black_id integer default 0,
+    date text default '',
     status text default 'OPEN',
     pgn text default '',
     fen text default 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',

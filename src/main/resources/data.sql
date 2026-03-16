@@ -82,11 +82,12 @@ values (
        )
 ;
 
-insert into games (white, black, status, pgn, fen)
+insert into games (white, black, status, date, pgn, fen)
 values (
            'andrei',
            '',
            'OPEN',
+           '2026-03-09',
            '[Event "?"]
 [Site "?"]
 [Date "????.??.??"]
@@ -98,11 +99,13 @@ values (
        )
 ;
 
-insert into games (white, black, status, pgn, fen)
+insert into games (white, black, status, result, date, pgn, fen)
 values (
-           'gigel',
            'costel',
+           'gigel',
            'FINISHED',
+           '1/2-1/2',
+           '2026-03-10',
            '[Event "F/S Return Match"]
 [Site "Belgrade, Serbia JUG"]
 [Date "1992.11.04"]
@@ -116,11 +119,13 @@ values (
        )
 ;
 
-insert into games (white, black, status, pgn, fen)
+insert into games (white, black, status, result, date, pgn, fen)
 values (
            'gigel',
            'costel',
            'FINISHED',
+           '1-0',
+           '2026-03-09',
            '[Event "?"]
 [Site "?"]
 [Date "????.??.??"]
@@ -134,11 +139,34 @@ values (
        )
 ;
 
-insert into games (white, black, status, pgn, fen)
+insert into games (white, black, status, result, date, pgn, fen)
 values (
            'gigel',
            'costel',
            'FINISHED',
+           '0-1',
+           '2026-03-09',
+           '[Event "?"]
+[Site "?"]
+[Date "????.??.??"]
+[Round "?"]
+[White "?"]
+[Black "?"]
+[Result "0-1"]
+
+1. e4 e5 2. Bc4 Nc6 3. Qf3 a6 4. Qxf7# 0-1',
+           'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
+       )
+
+;
+
+insert into games (white, black, status, result, date, pgn, fen)
+values (
+           'gigel',
+           'costel',
+           'FINISHED',
+           '0-1',
+           '2026-03-09',
            '[Event "?"]
 [Site "?"]
 [Date "????.??.??"]
@@ -150,32 +178,15 @@ values (
 1. e4 e5 2. Bc4 Nc6 3. Qf3 a6 4. Qxf7# 0-1',
            'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
        )
-
 ;
 
-insert into games (white, black, status, pgn, fen)
+insert into games (white, black, status, result, date, pgn, fen)
 values (
-           'gigel',
            'costel',
-           'FINISHED',
-           '[Event "?"]
-[Site "?"]
-[Date "????.??.??"]
-[Round "?"]
-[White "?"]
-[Black "?"]
-[Result "1-0"]
-
-1. e4 e5 2. Bc4 Nc6 3. Qf3 a6 4. Qxf7# 0-1',
-           'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
-       )
-;
-
-insert into games (white, black, status, pgn, fen)
-values (
            'gigel',
-           'costel',
            'FINISHED',
+           '0-1',
+           '2026-03-09',
            '[Event "?"]
 [Site "?"]
 [Date "????.??.??"]

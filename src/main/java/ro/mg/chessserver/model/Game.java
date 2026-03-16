@@ -34,6 +34,7 @@ public class Game {
     @Column(name = "black_id")
     private long blackId;
     private String status;
+    private String date;
     private String pgn;
     private String fen;
     private String result;
