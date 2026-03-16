@@ -26,6 +26,5 @@ create table games (
     foreign key (black) references players(id),
     check (
         status in ('OPEN', 'INPROGRESS', 'FINISHED')
-        and result in ('', 'WHITE WON', 'BLACK WON', 'DRAW')
     )
 );
