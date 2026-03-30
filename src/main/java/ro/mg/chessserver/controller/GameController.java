@@ -74,6 +74,11 @@ public class GameController {
         return gameService.getInProgressGames();
     }
 
+    @GetMapping("/inprogress/player/{username}")
+    public List<Diagram> getInProgressGamesForPlayer(@PathVariable String username) {
+        return gameService.getInProgressGamesForPlayer(username);
+    }
+
     @GetMapping("/open")
     public List<Diagram> getOpenGames() {
         return gameService.getOpenGames();

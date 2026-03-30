@@ -32,6 +32,7 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests((authorize) -> authorize
                     .requestMatchers("/games/inprogress").permitAll()
+                    .requestMatchers("/games/inprogress/**").permitAll()
                     .requestMatchers("/games/open").permitAll()
                     .requestMatchers(HttpMethod.GET,"/games/id/**").permitAll()
                     .requestMatchers(HttpMethod.POST,"/players/login").permitAll()

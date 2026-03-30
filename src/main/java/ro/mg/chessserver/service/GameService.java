@@ -170,6 +170,18 @@ public class GameService {
         return diagramList;
     }
 
+    public List<Diagram> getInProgressGamesForPlayer(String username) {
+        List<Diagram> diagramList = new ArrayList<>();
+        for (Game game : gameRepository.findByStatus("INPROGRESS").stream()
+                .filter((game) -> game.getWhite().equals(username) || game.getBlack().equals(username))
+                .toList())
+        {
+            diagramList.add(new Diagram(game));
+        }
+
+        return diagramList;
+    }
+
     public List<Diagram> getOpenGames() {
         List<Diagram> diagramList = new ArrayList<>();
         for (Game game : gameRepository.findByStatus("OPEN")) {
