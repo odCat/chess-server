@@ -1,5 +1,8 @@
 package ro.mg.chessserver.service;
 
+import java.time.Instant;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
@@ -48,6 +51,10 @@ public class PlayerService {
     public boolean addPlayer(Register register) {
         Player player = createPlayer(register);
         player.setPassword(passwordEncoder.encode(player.getPassword()));
+        String dateCreated = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                .withZone(ZoneOffset.UTC)
+                .format(Instant.now());
+        player.setCreated(dateCreated);
         playerRepository.save(player);
         return true;
     }
