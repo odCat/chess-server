@@ -123,6 +123,8 @@ public class PlayerService {
         else
             newPlayer.setFullName(oldPlayer.getFullName());
 
+        newPlayer.setCreated(oldPlayer.getCreated());
+
         return newPlayer;
     }
 
