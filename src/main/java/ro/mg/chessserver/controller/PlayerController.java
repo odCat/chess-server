@@ -52,9 +52,6 @@ public class PlayerController {
 
     @PostMapping("/register")
     public ResponseEntity<Register> register(@Valid @RequestBody Register register) {
-        register.setCreated(DateTimeFormatter.ofPattern("yyyy-MM-dd")
-                            .withZone(ZoneOffset.UTC)
-                            .format(Instant.now()));
         if (playerService.addPlayer(register))
             return ResponseEntity.status(HttpStatus.CREATED).body(register);
         else

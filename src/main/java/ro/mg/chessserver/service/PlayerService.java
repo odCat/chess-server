@@ -61,6 +61,10 @@ public class PlayerService {
         player.setUsername(register.getUsername());
         player.setPassword(register.getPassword());
         player.setFullName(register.getFullName());
+        
+        register.setCreated(DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                .withZone(ZoneOffset.UTC)
+                .format(Instant.now()));
         player.setCreated((register.getCreated()));
 
         return player;
