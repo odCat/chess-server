@@ -34,4 +34,6 @@ public class Register {
         private String password;
 
         private String fullName;
+
+        private String created;
 }

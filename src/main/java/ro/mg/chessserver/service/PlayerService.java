@@ -51,10 +51,6 @@ public class PlayerService {
     public boolean addPlayer(Register register) {
         Player player = createPlayer(register);
         player.setPassword(passwordEncoder.encode(player.getPassword()));
-        String dateCreated = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-                .withZone(ZoneOffset.UTC)
-                .format(Instant.now());
-        player.setCreated(dateCreated);
         playerRepository.save(player);
         return true;
     }
@@ -65,6 +61,7 @@ public class PlayerService {
         player.setUsername(register.getUsername());
         player.setPassword(register.getPassword());
         player.setFullName(register.getFullName());
+        player.setCreated((register.getCreated()));
 
         return player;
     }
@@ -86,6 +83,7 @@ public class PlayerService {
 
     public Player update(long id, Update update) {
         Player player = playerRepository.findById(id);
+
         if (player == null)
             return null;
         if (update.getPassword() != null)
@@ -126,6 +124,8 @@ public class PlayerService {
             newPlayer.setFullName(update.getFullName());
         else
             newPlayer.setFullName(oldPlayer.getFullName());
+
+        newPlayer.setCreated(oldPlayer.getCreated());
 
         return newPlayer;
     }

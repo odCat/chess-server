@@ -1,6 +1,9 @@
 package ro.mg.chessserver.controller;
 
 import jakarta.validation.Valid;
+import java.time.Instant;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +52,9 @@ public class PlayerController {
 
     @PostMapping("/register")
     public ResponseEntity<Register> register(@Valid @RequestBody Register register) {
+        register.setCreated(DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                            .withZone(ZoneOffset.UTC)
+                            .format(Instant.now()));
         if (playerService.addPlayer(register))
             return ResponseEntity.status(HttpStatus.CREATED).body(register);
         else
