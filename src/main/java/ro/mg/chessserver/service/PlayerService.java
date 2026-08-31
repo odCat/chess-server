@@ -61,6 +61,7 @@ public class PlayerService {
         player.setUsername(register.getUsername());
         player.setPassword(register.getPassword());
         player.setFullName(register.getFullName());
+        player.setCreated((register.getCreated()));
 
         return player;
     }
@@ -82,6 +83,7 @@ public class PlayerService {
 
     public Player update(long id, Update update) {
         Player player = playerRepository.findById(id);
+
         if (player == null)
             return null;
         if (update.getPassword() != null)
