@@ -51,10 +51,6 @@ public class PlayerService {
     public boolean addPlayer(Register register) {
         Player player = createPlayer(register);
         player.setPassword(passwordEncoder.encode(player.getPassword()));
-        String dateCreated = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-                .withZone(ZoneOffset.UTC)
-                .format(Instant.now());
-        player.setCreated(dateCreated);
         playerRepository.save(player);
         return true;
     }
