@@ -61,7 +61,7 @@ public class PlayerService {
         player.setUsername(register.getUsername());
         player.setPassword(register.getPassword());
         player.setFullName(register.getFullName());
-        
+
         register.setCreated(DateTimeFormatter.ofPattern("yyyy-MM-dd")
                 .withZone(ZoneOffset.UTC)
                 .format(Instant.now()));
@@ -90,9 +90,7 @@ public class PlayerService {
 
         if (player == null)
             return null;
-        if (update.getPassword() != null)
-            update.setPassword(passwordEncoder.encode(update.getPassword()));
-        player = createNewPlayer(id, player, update);
+        updatePlayer(player, update);
         playerRepository.save(player);
 
         player.setPassword(jwtService.createToken(player.getId()));
@@ -104,34 +102,19 @@ public class PlayerService {
         return new ArrayList<>(gameRepository.findGameHistory(username, "FINISHED"));
     }
 
-    private Player createNewPlayer(long id, Player oldPlayer, Update update) {
-        Player newPlayer = new Player();
-
-        newPlayer.setId(id);
+    private void updatePlayer(Player player, Update update) {
 
         if (update.getEmail() != null)
-            newPlayer.setEmail(update.getEmail());
-        else
-            newPlayer.setEmail(oldPlayer.getEmail());
+            player.setEmail(update.getEmail());
 
         if (update.getUsername() != null)
-            newPlayer.setUsername(update.getUsername());
-        else
-            newPlayer.setUsername(oldPlayer.getUsername());
+            player.setUsername(update.getUsername());
 
         if (update.getPassword() != null)
-            newPlayer.setPassword(update.getPassword());
-        else
-            newPlayer.setPassword(oldPlayer.getPassword());
+            player.setPassword(passwordEncoder.encode(update.getPassword()));
 
         if (update.getFullName() != null)
-            newPlayer.setFullName(update.getFullName());
-        else
-            newPlayer.setFullName(oldPlayer.getFullName());
-
-        newPlayer.setCreated(oldPlayer.getCreated());
-
-        return newPlayer;
+            player.setFullName(update.getFullName());
     }
 
     public void deletePlayer(long id) {
